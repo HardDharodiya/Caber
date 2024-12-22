@@ -115,3 +115,26 @@ This component provides a form for captains to create an account. It includes in
 `src/components/CaptainSignup.jsx`
 
 ---
+
+### 6 Home.jsx
+
+This page  designed to assist users in finding trips by selecting pickup and destination locations. It features a dynamic user interface powered by React and GSAP animations.
+
+## Features
+
+- **Dynamic Input Panel**: Users can toggle an interactive panel to input their trip details.
+- **GSAP Animations**: Smooth animations for opening and closing the input panel.
+- **Responsive Design**: Fully responsive layout for optimal user experience across devices.
+- **Reusable Components**: Includes modular components like `LocationSearchPanel`.
+
+## Prerequisites
+
+Before running this project, ensure you have the following installed:
+
+- Node.js (version 14 or higher)
+- npm or yarn
+
+#### File Location:
+`src/components/Home.jsx`
+
+---
