@@ -15,7 +15,7 @@ This component serves as the landing page for the application. It introduces use
   - Clean layout with clear CTA.
   
 #### File Location:
-`src/components/Start.jsx`
+`src/pages/Start.jsx`
 
 ---
 
@@ -38,7 +38,7 @@ This component handles user login functionality. It includes a form to input an 
   - React Router (`Link`).
 
 #### File Location:
-`src/components/UserLogin.jsx`
+`src/pages/UserLogin.jsx`
 
 ---
 
@@ -61,7 +61,7 @@ This component provides a form for captains to create an account. It includes in
   - React Router (`Link`).
 
 #### File Location:
-`src/components/UserSignup.jsx`
+`src/pages/UserSignup.jsx`
 
 ---
 
@@ -84,7 +84,7 @@ This component handles captain login functionality. It includes a form to input 
   - React Router (`Link`).
 
 #### File Location:
-`src/components/CaptainLogin.jsx`
+`src/pages/CaptainLogin.jsx`
 
 ---
 
@@ -108,11 +108,11 @@ This component provides a form for captains to create an account. It includes in
 - **Styling**:
   - Dark theme with flexible layout for responsiveness.
 - **Dependencies**:
-  - React hooks (`useState`).
+  - React hooks (`useState`, `useRef`).
   - React Router (`Link`).
 
 #### File Location:
-`src/components/CaptainSignup.jsx`
+`src/pages/CaptainSignup.jsx`
 
 ---
 
@@ -125,7 +125,12 @@ This page  designed to assist users in finding trips by selecting pickup and des
 - **Dynamic Input Panel**: Users can toggle an interactive panel to input their trip details.
 - **GSAP Animations**: Smooth animations for opening and closing the input panel.
 - **Responsive Design**: Fully responsive layout for optimal user experience across devices.
-- **Reusable Components**: Includes modular components like `LocationSearchPanel`.
+- **Reusable Components**: 
+    - `LocationSearchPanel`: For location selection.
+       - #### File Location:(`src/components/LocationSearchPanel.jsx`)
+
+    - `VehiclePanel`: For vehicle options.
+        - #### File Location: (`src/components/VehiclePanel.jsx`)
 
 ## Prerequisites
 
@@ -135,6 +140,6 @@ Before running this project, ensure you have the following installed:
 - npm or yarn
 
 #### File Location:
-`src/components/Home.jsx`
+`src/pages/Home.jsx`
 
 ---
