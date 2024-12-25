@@ -10,7 +10,6 @@ const VehiclePanel = ({ setVehiclePanel }) => {
         
         className="opacity-1"
         onClick={() => {
-          console.log("clicked");
           setVehiclePanel(false); //check out working currently not working
         }}
       >
