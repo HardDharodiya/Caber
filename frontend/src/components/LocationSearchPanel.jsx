@@ -25,7 +25,7 @@ const LocationSearchPanel=(props)=>{
                         props.setVehiclePanel(true)
                         props.setPanelOpen(false)
                     }} 
-                    className="flex border-4 border-gray-100 active:border-orange-500 items-center justify-start bg-gray-100 rounded-2xl p-2 gap-3">
+                    className="flex border-4 border-gray-100 active:border-[#9A6AFF] items-center justify-start bg-gray-100 rounded-2xl p-2 gap-3">
                 
                     <h2 className="bg-gray-300 h-10 w-16 flex justify-center items-center rounded-full"><i className="ri-map-pin-2-line "></i></h2>
     

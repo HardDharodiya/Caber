@@ -1,16 +1,16 @@
 import React from "react";
-import car from "../assets/car.jpg";
+import car from "../assets/Car.webp";
 import moto from "../assets/moto.webp";
 import auto from "../assets/auto.webp";
 
-const VehiclePanel = ({ setVehiclePanel }) => {
+const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
   return (
     <div>
       <div
-        
+
         className="opacity-1"
         onClick={() => {
-          setVehiclePanel(false); //check out working currently not working
+          setVehiclePanel(false);
         }}
       >
         <div className="absolute top-0 w-full h-1 bg-slate-200 rounded-bl-full rounded-br-full left-0"></div>
@@ -24,7 +24,11 @@ const VehiclePanel = ({ setVehiclePanel }) => {
         Choose your Vehicle
       </h3>
 
-      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-orange-500 rounded-2xl">
+      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
+        onClick={() => {
+          setConfirmRidePanel(true)
+        }}
+      >
         <img className="h-10" src={car} alt="" />
 
         <div className="ml-2 w-1/2">
@@ -44,7 +48,11 @@ const VehiclePanel = ({ setVehiclePanel }) => {
         <h2 className="text-lg font-semibold">₹193.20</h2>
       </div>
 
-      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-orange-500 rounded-2xl">
+      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
+        onClick={() => {
+          setConfirmRidePanel(true)
+        }}
+      >
         <img className="h-10" src={moto} alt="" />
 
         <div className="ml-2 w-1/2">
@@ -64,7 +72,11 @@ const VehiclePanel = ({ setVehiclePanel }) => {
         <h2 className="text-lg font-semibold">₹65.27</h2>
       </div>
 
-      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-orange-500 rounded-2xl">
+      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
+        onClick={() => {
+          setConfirmRidePanel(true)
+        }}
+      >
         <img className="h-10" src={auto} alt="" />
 
         <div className="ml-2 w-1/2">

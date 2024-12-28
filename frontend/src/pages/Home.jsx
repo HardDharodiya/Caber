@@ -6,6 +6,8 @@ import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../components/LocationSearchPanel";
 import VehiclePanel from "../components/VehiclePanel";
+import ConfirmRide from "../components/ConfirmRide";
+import LookingForDriver from "../components/LookingForDriver";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -15,11 +17,18 @@ const Home = () => {
   const panelCloseRef = useRef(null);
   const [vehiclePanel, setVehiclePanel] = useState(false);
   const vehiclePanelRef = useRef(null);
+  const [confirmRidePanel, setConfirmRidePanel] = useState(false);
+  const confirmRidePanelRef = useRef(null);
+  const [vehicleFound, setVehicleFound] = useState(false);
+  const vehicleFoundRef = useRef(null);
+
+
 
   const submitHandler = () => {
     e.preventDefault();
   };
 
+  //location panel open and close
   useGSAP(
     function () {
       if (panelOpen) {
@@ -43,6 +52,7 @@ const Home = () => {
     [panelOpen]
   );
 
+  //vehical panel
   useGSAP(
     function () {
       if (vehiclePanel) {
@@ -58,16 +68,51 @@ const Home = () => {
     [vehiclePanel]
   );
 
+  //confirm ride panel 
+  useGSAP(
+    function () {
+      if (confirmRidePanel) {
+        gsap.to(confirmRidePanelRef.current, {
+          transform: "translatey(0)",
+        });
+      } else {
+        gsap.to(confirmRidePanelRef.current, {
+          transform: "translatey(100%)",
+        });
+      }
+    },
+    [confirmRidePanel]
+  );
+
+  //vehicle found
+  useGSAP(
+    function () {
+      if (vehicleFound) {
+        gsap.to(vehicleFoundRef.current, {
+          transform: "translatey(0)",
+        });
+      } else {
+        gsap.to(vehicleFoundRef.current, {
+          transform: "translatey(100%)",
+        });
+      }
+    },
+    [confirmRidePanel]
+  );
+
   return (
     <div className="h-screen relative overflow-hidden">
       <img src={logo} className="w-20 absolute left-5 top-0" />
 
+      {/* map */}
       <div className="h-screen w-screen">
         {/*map img for temporary use*/}
 
         <img src={map} alt="" className="h-screen w-full" />
       </div>
 
+
+      {/* find ride */}
       <div className="absolute h-screen top-0 w-full flex flex-col justify-end">
         <div className="h-[30%] bg-gray-900 p-5 relative">
           <h4 className="text-2xl font-semibold mb-5 text-white">
@@ -132,12 +177,32 @@ const Home = () => {
         </div>
       </div>
 
+      {/* vehicle panel */}
       <div
         ref={vehiclePanelRef}
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
-        <VehiclePanel setVehiclePanel={setVehiclePanel} />
+        <VehiclePanel setVehiclePanel={setVehiclePanel} setConfirmRidePanel={setConfirmRidePanel} />
       </div>
+
+
+      {/* confirm ride panel */}
+      <div
+        ref={confirmRidePanelRef}
+        className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
+      >
+        <ConfirmRide setConfirmRidePanel={setConfirmRidePanel}  setVehicleFound={setVehicleFound}/>
+      </div>
+
+      
+      {/*vehicle found*/}
+      <div
+        ref={vehicleFoundRef}
+        className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
+      >
+        <LookingForDriver setVehicleFound={setVehicleFound} />
+      </div>
+
     </div>
   );
 };
