@@ -202,7 +202,9 @@ const Home = () => {
         ref={vehicleFoundRef}
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
-        <LookingForDriver setVehicleFound={setVehicleFound} />
+        <LookingForDriver 
+        setVehicleFound={setVehicleFound} 
+        />
       </div>
     </div>
   );

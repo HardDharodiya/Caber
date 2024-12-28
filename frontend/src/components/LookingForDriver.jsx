@@ -3,14 +3,13 @@ import car from "../assets/Car.webp";
 
 
 
-const LookingForDriver = ({setVehicleFound}) => {
+const LookingForDriver = (props) => {
     return (
         <div>
             <div
                 className="opacity-1"
                 onClick={() => {
-                    console.log("clicked")
-                    setVehicleFound(false); //check out working currently not working
+                    props.setVehicleFound(false);
                 }}
             >
                 <div className="absolute top-0 w-full h-1 bg-slate-200 rounded-bl-full rounded-br-full left-0"></div>
