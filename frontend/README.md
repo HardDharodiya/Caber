@@ -116,7 +116,7 @@ This component provides a form for captains to create an account. It includes in
 
 ---
 
-### 6 Home.jsx
+### 6. Home.jsx
 
 This page  designed to assist users in finding trips by selecting pickup and destination locations. It features a dynamic user interface powered by React and GSAP animations.
 
