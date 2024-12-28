@@ -13,16 +13,15 @@ const Home = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
+  const [vehiclePanel, setVehiclePanel] = useState(false);
+  const [confirmRidePanel, setConfirmRidePanel] = useState(false);
+  const [vehicleFound, setVehicleFound] = useState(false);
+
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
-  const [vehiclePanel, setVehiclePanel] = useState(false);
   const vehiclePanelRef = useRef(null);
-  const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const confirmRidePanelRef = useRef(null);
-  const [vehicleFound, setVehicleFound] = useState(false);
   const vehicleFoundRef = useRef(null);
-
-
 
   const submitHandler = () => {
     e.preventDefault();
@@ -68,7 +67,7 @@ const Home = () => {
     [vehiclePanel]
   );
 
-  //confirm ride panel 
+  //confirm ride panel
   useGSAP(
     function () {
       if (confirmRidePanel) {
@@ -97,7 +96,7 @@ const Home = () => {
         });
       }
     },
-    [confirmRidePanel]
+    [vehicleFound]
   );
 
   return (
@@ -110,7 +109,6 @@ const Home = () => {
 
         <img src={map} alt="" className="h-screen w-full" />
       </div>
-
 
       {/* find ride */}
       <div className="absolute h-screen top-0 w-full flex flex-col justify-end">
@@ -182,19 +180,23 @@ const Home = () => {
         ref={vehiclePanelRef}
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
-        <VehiclePanel setVehiclePanel={setVehiclePanel} setConfirmRidePanel={setConfirmRidePanel} />
+        <VehiclePanel
+          setVehiclePanel={setVehiclePanel}
+          setConfirmRidePanel={setConfirmRidePanel}
+        />
       </div>
-
 
       {/* confirm ride panel */}
       <div
         ref={confirmRidePanelRef}
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
-        <ConfirmRide setConfirmRidePanel={setConfirmRidePanel}  setVehicleFound={setVehicleFound}/>
+        <ConfirmRide
+          setConfirmRidePanel={setConfirmRidePanel}
+          setVehicleFound={setVehicleFound}
+        />
       </div>
 
-      
       {/*vehicle found*/}
       <div
         ref={vehicleFoundRef}
@@ -202,7 +204,6 @@ const Home = () => {
       >
         <LookingForDriver setVehicleFound={setVehicleFound} />
       </div>
-
     </div>
   );
 };
