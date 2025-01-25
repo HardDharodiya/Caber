@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import User from "../assets/dummy-user.jpg"
 
 
-
-const RidePopUp = (props) => {
+const FinishRide = (setFinishRidePanel) => {
     return (
-        <div>
+        <div className=" w-full">
+
             <h3 className="text-2xl font-semibold text-yellow-50 mb-5">
-                New <span className="text-[#9A6AFF]">Ride</span> Available!
+                Finish this <span className="text-[#9A6AFF]">Ride</span>
             </h3>
 
             <div className="flex justify-between items-center mb-4 p-2">
@@ -19,7 +20,6 @@ const RidePopUp = (props) => {
 
                 <div>
                     <h3 className="text-xl font-medium text-green-500">₹193.20</h3>
-                    <p className="text-lg mt-1 text-gray-200">2.2 KM</p>
                 </div>
 
             </div>
@@ -46,23 +46,12 @@ const RidePopUp = (props) => {
                     </div>
 
                 </div>
-                <div className="flex mt-2 gap-5 w-full items-center flex-col justify-between">
-                    <button
-                        onClick={() => {
-                            props.setConfirmRidePopUpPanel(true)
-                        }}
-                        className="w-full bg-[#9A6AFF] font-semibold p-4 px-8 rounded-xl">Accept</button>
 
-                    <button
-                        onClick={() => {
-                            props.setRidePopUpPanel(false)
-                        }}
-                        className="w-full bg-orange-500 font-semibold p-4 px-8 rounded-xl">Ignore</button>
-                </div>
-
+                <Link to='/captain-home' className="w-full bg-[#9A6AFF] font-semibold p-3 rounded-xl text-center">Finish Ride</Link>
             </div>
         </div>
     )
 }
 
-export default RidePopUp
+
+export default FinishRide

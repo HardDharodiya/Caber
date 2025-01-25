@@ -8,6 +8,7 @@ import CaptainSignup from './pages/CaptainSignup';
 import Start from './pages/Start';
 import Riding from './pages/Riding';
 import CaptainHome from './pages/CaptainHome';
+import CaptainRiding from './pages/CaptainRiding';
 
 
 const app = () => {
@@ -21,6 +22,7 @@ const app = () => {
       <Route path='/captain-signup' element={<CaptainSignup />} />
       <Route path='/home' element={<Home />} />
       <Route path='/captain-home' element={<CaptainHome />} />
+      <Route path='/captain-riding' element={<CaptainRiding/>} />
     </Routes>
   )
 }
