@@ -6,10 +6,10 @@ This directory contains the frontend of the Caber project. The frontend is built
 
 The frontend is built using:
 
-- **Framework**: [React.js](https://reactjs.org/)
+- **Framework** : [React.js](https://reactjs.org/)
 
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) 
+- **Styling** : [Tailwind CSS](https://tailwindcss.com/) 
 
-- **State Management**: Context API
+- **State Management** : Context API
 
-- **Build Tool**: Vite
+- **Build Tool** : Vite
