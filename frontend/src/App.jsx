@@ -9,6 +9,7 @@ import Start from './pages/Start';
 import Riding from './pages/Riding';
 import CaptainHome from './pages/CaptainHome';
 import CaptainRiding from './pages/CaptainRiding';
+import ForgotPassword from './pages/ForgotPassword';
 
 
 const app = () => {
@@ -23,6 +24,7 @@ const app = () => {
       <Route path='/home' element={<Home />} />
       <Route path='/captain-home' element={<CaptainHome />} />
       <Route path='/captain-riding' element={<CaptainRiding/>} />
+      <Route path='/forgot-password' element={<ForgotPassword/>}/>
     </Routes>
   )
 }

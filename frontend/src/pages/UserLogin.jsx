@@ -64,6 +64,7 @@ const UserLogin = () => {
             placeholder="password"
             className="bg-[#ffffff] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-lg"
           />
+          <Link to="/forgot-password"></Link>
 
           <button
             className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
