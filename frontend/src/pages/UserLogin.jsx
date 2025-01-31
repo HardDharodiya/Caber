@@ -62,12 +62,12 @@ const UserLogin = () => {
               setPassword(e.target.value);
             }}
             placeholder="password"
-            className="bg-[#ffffff] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-lg"
+            className="bg-[#ffffff] mb-2 rounded px-4 py-2 border w-full text-lg placeholder:text-lg"
           />
-          <Link to="/forgot-password"></Link>
+          <Link to="/forgot-password" className="text-blue-500 ">Forgot Password ?</Link>
 
           <button
-            className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+            className="mt-6 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
             onClick={async () => {
               try {
                 const response = await axios.post(
