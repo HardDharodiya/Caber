@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
+console.log("MongoDB URI:", process.env.MONGO_URL);
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -63,7 +64,7 @@ const vehicleSchema = mongoose.Schema({
 });
 
 const routeSchema = mongoose.Schema({
-  userId: {
+  driverId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -81,6 +82,12 @@ const routeSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  passengers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   cost: {
     type: Number,
     required: true,
