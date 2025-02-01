@@ -1,8 +1,8 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const mongoose = require("mongoose");
 
-mongoose.connect(
-  "mongodb+srv://rohangorvadia:rohangorvadia@cluster0.fe754.mongodb.net/Caber"
-);
+mongoose.connect(process.env.MONGO_URL);
 
 const userSchema = mongoose.Schema({
   email: {
@@ -62,10 +62,49 @@ const vehicleSchema = mongoose.Schema({
   },
 });
 
+const routeSchema = mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  vehicleId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Vehicle",
+    required: true,
+  },
+  source: {
+    type: String,
+    required: true,
+  },
+  destination: {
+    type: String,
+    required: true,
+  },
+  cost: {
+    type: Number,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+  },
+});
+
 const User = mongoose.model("user", userSchema);
 const Vehicle = mongoose.model("vehicle", vehicleSchema);
+const Route = mongoose.model("route", routeSchema);
 
 module.exports = {
   User,
   Vehicle,
+  Route,
 };

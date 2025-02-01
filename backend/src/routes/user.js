@@ -3,7 +3,6 @@ const userRouter = express.Router();
 const zod = require("zod");
 const { User, Vehicle } = require("../db");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = require("../config");
 
 const signupSchema = zod.object({
   email: zod.string().email(),
@@ -18,9 +17,18 @@ const signinSchema = zod.object({
   isCaptain: zod.boolean(),
 });
 
+const vehicleSchema = zod.object({
+  vehicleType: zod.string(),
+  vehicleNumber: zod.string(),
+  // vehicleModel: zod.string(),
+  vehicleColor: zod.string(),
+  vehicleCapacity: zod.number(),
+});
+
 userRouter.post("/signup", async (req, res) => {
   const body = req.body;
   const success = signupSchema.safeParse(body);
+  const vehicleSuccess = vehicleSchema.safeParse(body);
 
   if (!success) {
     return res.status(400).json({
@@ -42,6 +50,11 @@ userRouter.post("/signup", async (req, res) => {
   const userId = user._id;
 
   if (body.isCaptain) {
+    if (!vehicleSuccess) {
+      return res.status(400).json({
+        message: "Invalid vehicle input",
+      });
+    }
     await Vehicle.create({
       userId: userId,
       vehicleType: body.vehicleType,
@@ -56,7 +69,7 @@ userRouter.post("/signup", async (req, res) => {
     {
       userId: user._id,
     },
-    JWT_SECRET
+    process.env.JWT_SECRET
   );
 
   console.log("token when adding new user in db");
@@ -88,7 +101,7 @@ userRouter.post("/signin", async (req, res) => {
       {
         userId: existingUser._id,
       },
-      JWT_SECRET
+      process.env.JWT_SECRET
     );
 
     return res.status(200).json({
