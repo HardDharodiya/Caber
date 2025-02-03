@@ -17,14 +17,14 @@ const Home = () => {
   const [vehiclePanel, setVehiclePanel] = useState(false);
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
-  const [waitingForDriver, setWaitingForDriver] = useState(false)
+  const [waitingForDriver, setWaitingForDriver] = useState(false);
 
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
   const vehiclePanelRef = useRef(null);
   const confirmRidePanelRef = useRef(null);
   const vehicleFoundRef = useRef(null);
-  const waitingForDriverRef = useRef(null)
+  const waitingForDriverRef = useRef(null);
 
   const submitHandler = () => {
     e.preventDefault();
@@ -112,7 +112,7 @@ const Home = () => {
       } else {
         gsap.to(waitingForDriverRef.current, {
           transform: "translatey(100%)",
-        })
+        });
       }
     },
     [waitingForDriver]
@@ -221,10 +221,7 @@ const Home = () => {
         ref={vehicleFoundRef}
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
-        <LookingForDriver
-          setVehicleFound={setVehicleFound}
-          
-        />
+        <LookingForDriver setVehicleFound={setVehicleFound} />
       </div>
 
       {/*Waition for driver*/}
@@ -232,10 +229,8 @@ const Home = () => {
         ref={waitingForDriverRef}
         className="fixed max-h-[50%] z-10 bottom-0 w-full px-3 py-8  bg-gray-900 overflow-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]"
       >
-        <WaitingForDriver setWaitingForDriver={setWaitingForDriver}/>
+        <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
       </div>
-
-      
     </div>
   );
 };

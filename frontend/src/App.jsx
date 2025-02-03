@@ -10,6 +10,7 @@ import Riding from './pages/Riding';
 import CaptainHome from './pages/CaptainHome';
 import CaptainRiding from './pages/CaptainRiding';
 import ForgotPassword from './pages/ForgotPassword';
+import CaptainAboutpanle from './components/CaptainAboutPanle';
 
 
 const app = () => {
@@ -25,6 +26,7 @@ const app = () => {
       <Route path='/captain-home' element={<CaptainHome />} />
       <Route path='/captain-riding' element={<CaptainRiding/>} />
       <Route path='/forgot-password' element={<ForgotPassword/>}/>
+      <Route path="/captain-about" element={<CaptainAboutpanle />} />
     </Routes>
   )
 }
