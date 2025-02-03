@@ -37,8 +37,8 @@ const captainSignup = () => {
   // },[captainData])
 
   return (
-    <div className="bg-[#1E2029] h-screen w-full flex flex-col justify-between">
-      <div>
+    <div className="bg-[#1E2029] h-full w-full flex flex-col justify-between">
+      <div className="overflow-hidden">
         <img src={logo} alt="" className="w-20 ml-3" />
 
         <form
@@ -163,6 +163,21 @@ const captainSignup = () => {
               <option value="moto">Moto</option>
             </select>
           </div>
+
+          <h3 className="text-base font-medium mb-2 text-[#ffffff]">
+            Licence Number
+          </h3>
+
+          <input
+            required
+            type="licence"
+            placeholder="Licence no."
+            className="bg-[#ffffff] mb-3 rounded px-4 py-2 border w-full text-base placeholder:text-sm"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
 
           <button
             className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
