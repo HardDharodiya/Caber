@@ -3,7 +3,9 @@ const routeRouter = express.Router();
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
 const { authMiddleware } = require("../middlewares");
-const { Vehicle, Route, User } = require("../db");
+const Route = require("../models/route");
+const Vehicle = require("../models/vehicle");
+const User = require("../models/user");
 
 const routeSchema = zod.object({
   source: zod.string(),
@@ -122,7 +124,7 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
 
     const updatedRoute = await Route.findByIdAndUpdate(
       routeId,
-      
+
       { $addToSet: { passengers: req.userId } }, // Prevents duplicates
       { new: true, upsert: true } // Returns updated document and creates if missing
     );

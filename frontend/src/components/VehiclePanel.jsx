@@ -7,7 +7,6 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
   return (
     <div>
       <div
-
         className="opacity-1"
         onClick={() => {
           setVehiclePanel(false);
@@ -24,9 +23,11 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
         Choose your Vehicle
       </h3>
 
-      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
+      <div
+        className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
         onClick={() => {
-          setConfirmRidePanel(true)
+          setConfirmRidePanel(true);
+          setVehiclePanel(false);
         }}
       >
         <img className="h-10" src={car} alt="" />
@@ -48,9 +49,11 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
         <h2 className="text-lg font-semibold">₹193.20</h2>
       </div>
 
-      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
+      <div
+        className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
         onClick={() => {
-          setConfirmRidePanel(true)
+          setConfirmRidePanel(true);
+          setVehiclePanel(false);
         }}
       >
         <img className="h-10" src={moto} alt="" />
@@ -72,9 +75,11 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
         <h2 className="text-lg font-semibold">₹65.27</h2>
       </div>
 
-      <div className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
+      <div
+        className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
         onClick={() => {
-          setConfirmRidePanel(true)
+          setConfirmRidePanel(true);
+          setVehiclePanel(false);
         }}
       >
         <img className="h-10" src={auto} alt="" />

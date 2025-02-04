@@ -1,8 +1,12 @@
 const express = require("express");
 const userRouter = express.Router();
 const zod = require("zod");
-const { User, Vehicle } = require("../db");
+const User = require("../models/user");
+const Vehicle = require("../models/vehicle");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const { authMiddleware } = require("../middlewares");
+dotenv.config({ path: "../.env" });
 
 const signupSchema = zod.object({
   email: zod.string().email(),
@@ -120,6 +124,99 @@ userRouter.post("/signin", async (req, res) => {
 
     return res.status(400).json({
       message: "Error while Logging in",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+userRouter.post("/toggleCaptain", authMiddleware, async (req, res) => {
+  try {
+    if (!req.body.isCaptain) {
+      return res.status(400).json({
+        message: "IsCaptain field is required",
+      });
+    }
+
+    const user = await User.findOneAndUpdate(
+      { _id: req.userId },
+      { $set: { isCaptain: req.body.isCaptain } },
+      { new: true }
+    );
+    // console.log("thins" + user);
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      message: "Captain status updated successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+userRouter.get("/getProfile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.userId });
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      user,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+userRouter.post("/addVehicle", authMiddleware, async (req, res) => {
+  try {
+    const body = req.body;
+    const success = vehicleSchema.safeParse(body);
+
+    if (!success) {
+      return res.status(400).json({
+        message: "Invalid Input",
+      });
+    }
+
+    const vehicle = await Vehicle.create({
+      userId: req.userId,
+      vehicleType: body.vehicleType,
+      vehicleNumber: body.vehicleNumber,
+      vehicleColor: body.vehicleColor,
+      vehicleCapacity: body.vehicleCapacity,
+    });
+
+    res.status(200).json({
+      message: "Vehicle added successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+userRouter.get("/getVehicle", authMiddleware, async (req, res) => {
+  try {
+    const vehicles = await Vehicle.find({ userId: req.userId });
+    res.status(200).json({
+      vehicles,
     });
   } catch (err) {
     console.log(err);

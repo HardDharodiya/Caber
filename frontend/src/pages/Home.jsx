@@ -91,7 +91,7 @@ const Home = () => {
     function () {
       if (vehicleFound) {
         gsap.to(vehicleFoundRef.current, {
-          transform: "translatey(0)",
+          transform: "translatey(0%)",
         });
       } else {
         gsap.to(vehicleFoundRef.current, {
