@@ -7,7 +7,7 @@ import gsap from "gsap";
 
 const CaptainRiding = () => {
 
-    const [finishRidePanel, setFinishRidePanel] = useState(true)
+    const [finishRidePanel, setFinishRidePanel] = useState(false)
     const finishRidePanelRef = useRef(null)
 
 
@@ -15,11 +15,11 @@ const CaptainRiding = () => {
         function () {
             if (finishRidePanel) {
                 gsap.to(finishRidePanelRef.current, {
-                    transform: 'translateY(0)'
+                    transform: 'translateY(0%)'
                 })
             } else {
                 gsap.to(finishRidePanelRef.current, {
-                    transform: 'translateY(70%)'
+                    transform: 'translateY(100%)'
                 })
             }
         },

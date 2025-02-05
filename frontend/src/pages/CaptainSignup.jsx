@@ -37,8 +37,8 @@ const captainSignup = () => {
   // },[captainData])
 
   return (
-    <div className="bg-[#1E2029] h-full w-full flex flex-col justify-between">
-      <div className="overflow-hidden">
+    <div className="bg-[#1E2029] h-full w-full flex flex-col justify-between ">
+      <div className="overflow-scroll scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]">
         <img src={logo} alt="" className="w-20 ml-3" />
 
         <form
@@ -173,10 +173,6 @@ const captainSignup = () => {
             type="licence"
             placeholder="Licence no."
             className="bg-[#ffffff] mb-3 rounded px-4 py-2 border w-full text-base placeholder:text-sm"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
           />
 
           <button

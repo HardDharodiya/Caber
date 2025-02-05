@@ -1,1 +1,0 @@
-//this page have to code such logic that only loged in captain can navigate to home page and if not then it redirect to login page 

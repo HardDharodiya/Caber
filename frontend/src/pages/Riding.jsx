@@ -6,8 +6,6 @@ import User from "../assets/dummy-user.jpg"
 import { Link } from "react-router-dom";
 
 
-
-
 const Riding = () => {
     return (
         <div className="h-screen relative">
