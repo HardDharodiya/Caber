@@ -56,6 +56,7 @@ const signup = async (req, res) => {
       lastName: body.lastName,
       password: hashedPassword,
       isCaptain: body.isCaptain,
+      licenseNumber: body.licenseNumber,
     });
 
     const userId = user._id;

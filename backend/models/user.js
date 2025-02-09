@@ -22,6 +22,11 @@ const userSchema = mongoose.Schema({
     required: true,
     maxLength: 30,
   },
+  licenseNumber: {
+    type: String,
+    minLength: 4,
+    maxLength: 20,
+  },
   isCaptain: {
     type: Boolean,
     required: true,
