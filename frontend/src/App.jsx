@@ -12,6 +12,7 @@ import CaptainRiding from './pages/CaptainRiding';
 import ForgotPassword from './pages/ForgotPassword';
 import CaptainAboutpanle from './pages/CaptainAboutPanle';
 import PaymentPage from './pages/PaymentPage';
+import PayPg from './pages/PayPg';
 
 
 const app = () => {
@@ -29,6 +30,7 @@ const app = () => {
       <Route path='/forgot-password' element={<ForgotPassword/>}/>
       <Route path='/captain-about' element={<CaptainAboutpanle />} />
       <Route path='/payment' element={<PaymentPage/>}/>
+      <Route path='/paypg' element={<PayPg />} />
     </Routes>
   )
 }
