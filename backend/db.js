@@ -13,10 +13,9 @@ const connectMongoDB = () => {
   db.on("error", (error) => {
     console.log("Error:" + error);
   });
-  db.on("connnected", () => {
+  db.on("connected", () => {
     console.log("Connected to MongoDB");
   });
 };
 
 module.exports = connectMongoDB;
-// Compare this snippet from backend/routes/user.js:
