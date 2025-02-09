@@ -4,7 +4,7 @@ This directory contains the frontend of the Caber project. The frontend is built
 
 ## Tech Stack
 
-The frontend is built using:
+### Frontend :
 
 - **Framework** : [React.js](https://reactjs.org/)
 
@@ -13,3 +13,22 @@ The frontend is built using:
 - **State Management** : Context API
 
 - **Build Tool** : Vite
+
+## Setup Instructions
+
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+4. Build for production:
+   ```sh
+   npm run build
+   ```
