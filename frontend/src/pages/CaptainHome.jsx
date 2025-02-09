@@ -58,7 +58,7 @@ const CaptainHome = () => {
             <div>
                 <img src={logo} alt="" className="w-20 absolute left-5 top-0" />
                 <button className="fixed  h-10 w-10 bg-gray-900 flex items-center justify-center rounded-full right-4 top-4"
-                    onClick={() => navigate('/captain-about')}
+                    onClick={() => navigate('/about')}
                 >
                     <i className="ri-menu-line text-gray-200 text-lg font-medium"></i>
                 </button>

@@ -1,15 +1,15 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
+const UserPayPg = () => {
+    const navigate = useNavigate();
 
-const PayPg = () => {
-      const navigate = useNavigate();
-    
     return (
         <div className="h-screen bg-[#1E2029] py-4 px-4 text-white">
             <div >
-                <div 
-                onClick={() => navigate("/about")}
-                className="flex items-center gap-4">
+                <div
+                    onClick={() => navigate("/user-about")}
+                    className="flex items-center gap-4">
                     <i class="ri-arrow-left-line text-white text-2xl"></i>
                     <div className="font-medium text-lg">Wallet </div>
                 </div>
@@ -18,7 +18,7 @@ const PayPg = () => {
 
                     <div className="mr-2">
                         <div>
-                            <div className="font-bold text-lg">John Doe</div>
+                            <div className="font-bold text-lg">Stiphen howk</div>
                             <div className="font-mono text-lg">W no - 1234567890</div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@ const PayPg = () => {
                     className="mt-8 mb-1
                      flex items-center justify-center w-full bg-green-500 text-black py-3 rounded-xl text-xl font-semibold"
                 >
-                    {/* Add Balance */}Withdraw
+                    Add Balance
                 </button>
             </div>
 
@@ -88,4 +88,4 @@ const PayPg = () => {
     )
 }
 
-export default PayPg
+export default UserPayPg

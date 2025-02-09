@@ -10,9 +10,13 @@ import Riding from './pages/Riding';
 import CaptainHome from './pages/CaptainHome';
 import CaptainRiding from './pages/CaptainRiding';
 import ForgotPassword from './pages/ForgotPassword';
-import CaptainAboutpanle from './pages/CaptainAboutPanle';
+import About from './pages/About';
 import PaymentPage from './pages/PaymentPage';
 import PayPg from './pages/PayPg';
+import CaptainAboutPage from './pages/CaptainAboutPage';
+import UserAbout from './pages/UserAbout';
+import UserPayPg from './pages/UserPayPg';
+import UserAboutPage from './pages/UserAboutPage';
 
 
 const app = () => {
@@ -26,11 +30,15 @@ const app = () => {
       <Route path='/captain-signup' element={<CaptainSignup />} />
       <Route path='/home' element={<Home />} />
       <Route path='/captain-home' element={<CaptainHome />} />
-      <Route path='/captain-riding' element={<CaptainRiding/>} />
-      <Route path='/forgot-password' element={<ForgotPassword/>}/>
-      <Route path='/captain-about' element={<CaptainAboutpanle />} />
-      <Route path='/payment' element={<PaymentPage/>}/>
+      <Route path='/captain-riding' element={<CaptainRiding />} />
+      <Route path='/forgot-password' element={<ForgotPassword />} />
+      <Route path='/about' element={<About />} />
+      <Route path='/payment' element={<PaymentPage />} />
       <Route path='/paypg' element={<PayPg />} />
+      <Route path='/captain-about' element={<CaptainAboutPage />} />
+      <Route path='/user-about' element={<UserAbout />} />
+      <Route path='/user-paypg' element={<UserPayPg />} />
+      <Route path='/user-aboutpg' element={<UserAboutPage/>}/>
     </Routes>
   )
 }

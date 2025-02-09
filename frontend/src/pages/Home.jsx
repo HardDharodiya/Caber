@@ -9,6 +9,7 @@ import VehiclePanel from "../components/VehiclePanel";
 import ConfirmRide from "../components/ConfirmRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -29,6 +30,8 @@ const Home = () => {
   const submitHandler = () => {
     e.preventDefault();
   };
+
+  const navigate = useNavigate();
 
   //location panel open and close
   useGSAP(
@@ -119,8 +122,17 @@ const Home = () => {
   );
 
   return (
+
     <div className="h-screen relative overflow-hidden">
-      <img src={logo} className="w-20 absolute left-5 top-0" />
+      <div>
+        <img src={logo} alt="" className="w-20 absolute left-5 top-0" />
+        <button
+          onClick={()=>navigate('/user-about')}
+          className="fixed  h-10 w-10 bg-gray-900 flex items-center justify-center rounded-full right-4 top-4"
+        >
+          <i className="ri-menu-line text-gray-200 text-lg font-medium"></i>
+        </button>
+      </div>
 
       {/* map */}
       <div className="h-screen w-screen">
