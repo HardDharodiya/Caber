@@ -1,145 +1,71 @@
-# Caber Application
+# Caber Frontend
 
-This repository contains React components for a ride-sharing application, including user and captain functionalities. Below is a brief overview of each component.
+This is the frontend part of the Caber ride-sharing application. It is built using React, Tailwind CSS, and Vite.
 
-## Components
+## Available Scripts
+- `npm run dev` - Starts the development server.
+- `npm run build` - Builds the application for production.
+- `npm run lint` - Lints the codebase.
+- `npm run preview` - Previews the production build.
 
-### 1. Start.jsx
-This component serves as the landing page for the application. It introduces users to the app and provides a call-to-action to proceed.
+## Project Structure
 
-#### Features:
-- **Background**: Dynamic background image.
-- **Button**: Redirects to the login page using React Router.
-- **Logo**: Displays the app logo.
-- **Styling**:
-  - Clean layout with clear CTA.
-  
-#### File Location:
-`src/pages/Start.jsx`
+### Pages
+- `About.jsx` - About page
+- `CaptainAboutPage.jsx` - Captain's about page
+- `CaptainHome.jsx` - Captain's home page
+- `CaptainLogin.jsx` - Captain's login page
+- `CaptainRiding.jsx` - Captain's ride management page
+- `CaptainSignup.jsx` - Captain's signup page
+- `ForgotPassword.jsx` - Password recovery page
+- `Home.jsx` - Main home page
+- `PayPg.jsx` - Page for `Captain` to withdraw earning
+- `PaymentPage.jsx` - Detailed payment page
+- `Riding.jsx` - User's ride tracking page
+- `Start.jsx` - Ride start page
+- `UserAbout.jsx` - User's about page
+- `UserAboutPage.jsx` - Another user about page
+- `UserLogin.jsx` - User login page
+- `UserPayPg.jsx` - For `User` to add balance in wallet
+- `UserSignup.jsx` - User signup page
 
----
+### Components
+- `CaptainDetails.jsx` - Captain's profile details
+- `ConfirmRide.jsx` - Ride confirmation page
+- `ConfirmRidePopUp.jsx` - Ride confirmation popup
+- `FinishRide.jsx` - Ride completion page
+- `LocationSearchPanel.jsx` - Location search functionality
+- `LookingForDriver.jsx` - Search for available drivers
+- `RidePopUp.jsx` - Ride details popup
+- `VehiclePanel.jsx` - Vehicle selection and details
+- `WaitingForDriver.jsx` - Driver arrival waiting screen
 
-### 2. UserLogin.jsx
-This component handles user login functionality. It includes a form to input an email and password.
+### Context
+- `CaptainContext.jsx` - Context for captain-related state
+- `UserContext.jsx` - Context for user-related state
 
-#### Features:
-- **Input Fields**:
-  - Email
-  - Password
-- **Form Submission**:
-  - Captures email and password, stores them in the state.
-- **Additional Options**:
-  - Link to create a new account.
-  - Option to login as a captain.
-- **Styling**:
-  - Consistent dark theme with responsive design.
-- **Dependencies**:
-  - React hooks (`useState`).
-  - React Router (`Link`).
+### Styling
+- `Tailwind CSS` - Used for styling
+- `Global Styles` - `index.css`
 
-#### File Location:
-`src/pages/UserLogin.jsx`
+### Build Tool
+- `Vite` - Configured in `vite.config.js`
 
----
+## Setup Instructions
+1. Install dependencies:
+   ```sh
+   npm install
+   ```
+2. Start the development server:
+   ```sh
+   npm run dev
+   ```
+3. Build for production:
+   ```sh
+   npm run build
+   ```
 
-### 3. UserSignup.jsx
-This component provides a form for captains to create an account. It includes inputs for personal details, email, password.
-
-#### Features:
-- **Input Fields**: 
-  - Name:
-    - First name
-    - Last name
-  - Email
-  - Password
-- **Form Submission**:
-  - Captures data and stores it in the state.
-- **Styling**:
-  - Dark theme with flexible layout for responsiveness.
-- **Dependencies**:
-  - React hooks (`useState`).
-  - React Router (`Link`).
-
-#### File Location:
-`src/pages/UserSignup.jsx`
-
----
-
-### 4. CaptainLogin.jsx
-This component handles captain login functionality. It includes a form to input an email and password.
-
-#### Features:
-- **Input Fields**:
-  - Email
-  - Password
-- **Form Submission**:
-  - Captures email and password, stores them in the state.
-- **Additional Options**:
-  - Link to create a new captain account.
-  - Option to login as a user.
-- **Styling**:
-  - Consistent dark theme with responsive design.
-- **Dependencies**:
-  - React hooks (`useState`).
-  - React Router (`Link`).
-
-#### File Location:
-`src/pages/CaptainLogin.jsx`
-
----
-
-### 5. CaptainSignup.jsx
-This component provides a form for captains to create an account. It includes inputs for personal details, email, password, and vehicle information.
-
-#### Features:
-- **Input Fields**: 
-  - Name:
-    - First name
-    - Last name
-  - Email
-  - Password
-  - Vehicle details: 
-    - Color
-    - Number Plate
-    - Capacity
-    - Type (dropdown)
-- **Form Submission**:
-  - Captures data and stores it in the state.
-- **Styling**:
-  - Dark theme with flexible layout for responsiveness.
-- **Dependencies**:
-  - React hooks (`useState`, `useRef`).
-  - React Router (`Link`).
-
-#### File Location:
-`src/pages/CaptainSignup.jsx`
-
----
-
-### 6. Home.jsx
-
-This page  designed to assist users in finding trips by selecting pickup and destination locations. It features a dynamic user interface powered by React and GSAP animations.
-
-## Features
-
-- **Dynamic Input Panel**: Users can toggle an interactive panel to input their trip details.
-- **GSAP Animations**: Smooth animations for opening and closing the input panel.
-- **Responsive Design**: Fully responsive layout for optimal user experience across devices.
-- **Reusable Components**: 
-    - `LocationSearchPanel`: For location selection.
-       - #### File Location:(`src/components/LocationSearchPanel.jsx`)
-
-    - `VehiclePanel`: For vehicle options.
-        - #### File Location: (`src/components/VehiclePanel.jsx`)
-
-## Prerequisites
-
-Before running this project, ensure you have the following installed:
-
-- Node.js (version 14 or higher)
-- npm or yarn
-
-#### File Location:
-`src/pages/Home.jsx`
-
----
+## Technologies Used
+- React (Vite)
+- Tailwind CSS
+- Context API for state management
