@@ -14,8 +14,8 @@ import { useNavigate } from "react-router-dom";
 const CaptainHome = () => {
     const navigate = useNavigate();
 
-    const { ridePopUpPanel, setRidePopUpPanel } = useState(true)
-    const { confirmRidePopUpPanel, setConfirmRidePopUpPanel } = useState(false)                                     
+    const [ ridePopUpPanel, setRidePopUpPanel ] = useState(true)
+    const [ confirmRidePopUpPanel, setConfirmRidePopUpPanel ] = useState(false)                                     
 
     const ridePopUpPanelRef = useRef(null)
     const confirmRidePopUpPanelRef = useRef(null)
