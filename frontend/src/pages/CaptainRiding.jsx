@@ -32,7 +32,7 @@ const CaptainRiding = () => {
 
             <div className="h-[20%] bg-gray-900 p-5 relative"
                 onClick={() => {
-                    setFinishRidePanel(false);
+                    setFinishRidePanel(true);
                 }}>
 
                 <div className="opacity-1 mb-2">
