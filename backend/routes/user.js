@@ -38,7 +38,24 @@ userRouter.get("/getUser", authMiddleware, async (req, res) => {
     });
   }
 });
-
+userRouter.get("/getCaptain", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.userId }).select("isCaptain");
+    if (!user) {
+      return res.status(400).json({
+        message: "not found",
+      });
+    }
+    res.status(200).json({
+      user,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+});
 userRouter.post("/toggleCaptain", authMiddleware, async (req, res) => {
   try {
     if (!req.body.isCaptain) {
