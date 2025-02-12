@@ -105,7 +105,7 @@ const UserSignup = () => {
             onClick={async () => {
               try {
                 const response = await axios.post(
-                  "http://localhost:3000/api/v1/user/signup",
+                  "http://localhost:3000/api/user/auth/signup",
                   {
                     email,
                     firstName,

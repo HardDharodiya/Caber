@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import UpiLogo from "../assets/upiLogo.png";
 import CardLogo from "../assets/cardLogo.png";
+import axios from "axios";
 
 const PaymentForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [amount, setAmount] = useState(0);
   const [upi, setUpi] = useState("");
   const [cardName, setCardName] = useState("");
   const [cardExDate, setCardExDate] = useState("");
@@ -13,14 +15,36 @@ const PaymentForm = () => {
     setPaymentMethod(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    alert("Payment details submitted");
+    const token = localStorage.getItem("token");
+    const cleanToken = token.replace(/"/g, "");
+    console.log(cleanToken);
+
+    await axios
+      .post(
+        "http://localhost:3000/api/user/addMoney",
+        { amount: amount }, // Request body
+        {
+          headers: {
+            Authorization: `Bearer ${cleanToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error.response?.data || error.message);
+      });
+
+    alert("Money Added Successfully");
   };
 
   const handleReset = () => {
     setPaymentMethod("");
+    setAmount("");
     setUpi("");
     setCardName("");
     setCardExDate("");
@@ -34,18 +58,18 @@ const PaymentForm = () => {
         onSubmit={handleSubmit}
         className="bg-[#1E2029] p-6 h-full items-center"
       >
-
-        
-        <div className="text-center text-xl font-semibold text-white mb-10 mt-4">Payment Methods</div>
+        <div className="text-center text-xl font-semibold text-white mb-10 mt-4">
+          Payment Methods
+        </div>
 
         <div className="flex justify-center items-center gap-3 rounded-md mb-6 cursor-pointer hover:bg-[#444851]">
-              <input
-                type="number"
-                placeholder="Enter Amount"
-                className="w-full px-4 py-4 rounded-md text-green-500 text-lg focus:outline-none placeholder:text-black focus:ring-2 focus:ring-indigo-500 bg-white"
-              />
-              
-            </div>
+          <input
+            type="number"
+            placeholder="Enter Amount"
+            className="w-full px-4 py-4 rounded-md text-green-500 text-lg focus:outline-none placeholder:text-black focus:ring-2 focus:ring-indigo-500 bg-white"
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </div>
 
         <div className="flex flex-col justify-between relative">
           <div>
@@ -64,11 +88,7 @@ const PaymentForm = () => {
                 htmlFor="UPI1"
                 className="flex items-center gap-2 w-full p-3 bg-[#ffffff] rounded-md"
               >
-                <img
-                  src={UpiLogo}
-                  alt="UPI Logo"
-                  className="w-16 h-8"
-                />
+                <img src={UpiLogo} alt="UPI Logo" className="w-16 h-8" />
                 <span className="text-black text-lg">UPI</span>
               </label>
             </div>
@@ -102,11 +122,7 @@ const PaymentForm = () => {
                 htmlFor="CARD1"
                 className="flex items-center gap-2 w-full p-3 bg-[#ffffff] rounded-md"
               >
-                <img
-                  src={CardLogo}
-                  alt="Card Logo"
-                  className="w-8 h-8"
-                />
+                <img src={CardLogo} alt="Card Logo" className="w-8 h-8" />
                 <span className="text-black text-lg">Credit/Debit Card</span>
               </label>
             </div>
@@ -152,6 +168,7 @@ const PaymentForm = () => {
                 <button
                   type="submit"
                   className="w-full py-3 bg-[#50C84F] text-white font-semibold rounded-md hover:bg-[#4CAF50] focus:outline-none "
+                  onClick={handleSubmit}
                 >
                   Submit
                 </button>
