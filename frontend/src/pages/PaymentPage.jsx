@@ -34,7 +34,18 @@ const PaymentForm = () => {
         onSubmit={handleSubmit}
         className="bg-[#1E2029] p-6 h-full items-center"
       >
+
+        
         <div className="text-center text-xl font-semibold text-white mb-10 mt-4">Payment Methods</div>
+
+        <div className="flex justify-center items-center gap-3 rounded-md mb-6 cursor-pointer hover:bg-[#444851]">
+              <input
+                type="number"
+                placeholder="Enter Amount"
+                className="w-full px-4 py-4 rounded-md text-green-500 text-lg focus:outline-none placeholder:text-black focus:ring-2 focus:ring-indigo-500 bg-white"
+              />
+              
+            </div>
 
         <div className="flex flex-col justify-between relative">
           <div>
