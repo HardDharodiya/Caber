@@ -1,6 +1,5 @@
 const Vehicle = require("../models/vehicle");
 const zod = require("zod");
-const { authMiddleware } = require("../middlewares");
 
 const vehicleSchema = zod.object({
   vehicleType: zod.string(),

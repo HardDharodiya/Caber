@@ -64,5 +64,20 @@ const verifyOTP = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    const { email, password } = req.body.password;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.updateOne({ email }, { password: hashedPassword });
+
+    return res.status(200).json({
+      message: "Password changed successfully",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 console.log(generateOTP());
-module.exports = { reqOTP, verifyOTP };
+module.exports = { reqOTP, verifyOTP, changePassword };

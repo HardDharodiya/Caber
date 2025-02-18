@@ -11,14 +11,26 @@ const routeSchema = mongoose.Schema({
     ref: "Vehicle",
     required: true,
   },
-  source: {
-    type: String,
-    required: true,
-  },
-  destination: {
-    type: String,
-    required: true,
-  },
+  origin: [
+    {
+      type: Number,
+      required: true,
+    },
+    {
+      type: Number,
+      required: true,
+    },
+  ],
+  destination: [
+    {
+      type: Number,
+      required: true,
+    },
+    {
+      type: Number,
+      required: true,
+    },
+  ],
   passengers: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -31,15 +43,15 @@ const routeSchema = mongoose.Schema({
   },
   date: {
     type: String,
-    required: true,
+    // required: true,
   },
   time: {
     type: String,
-    required: true,
+    // required: true,
   },
   status: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 

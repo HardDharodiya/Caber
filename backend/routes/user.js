@@ -1,7 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../models/user");
-const dotenv = require("dotenv");
 const { authMiddleware } = require("../middlewares");
 const { signup, login } = require("../controls/auth");
 const {
@@ -9,13 +8,13 @@ const {
   getVehicle,
   removeVehicle,
 } = require("../controls/vehicle");
-const { verifyOTP, reqOTP } = require("../controls/verifyAuth");
-dotenv.config({ path: "../.env" });
+const { verifyOTP, reqOTP, changePassword } = require("../controls/verifyAuth");
 
 userRouter.post("/auth/signup", signup);
 userRouter.post("/auth/login", login);
 userRouter.post("/sendOTP", reqOTP);
 userRouter.post("/verifyOTP", verifyOTP);
+userRouter.post("/changePassword", changePassword);
 userRouter.post("/addVehicle", authMiddleware, addVehicle);
 userRouter.get("/getVehicle", authMiddleware, getVehicle);
 userRouter.get("/removeVehicle", authMiddleware, removeVehicle);

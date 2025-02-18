@@ -1,6 +1,5 @@
-const dotenv = require("dotenv");
-dotenv.config();
 const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("./config");
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -18,13 +17,13 @@ const authMiddleware = (req, res, next) => {
   // console.log("decoded");
   // console.log(decoded);
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
 
     req.userId = decoded.userId;
 
     next();
   } catch (err) {
-//     return res.status(403).json("try-catch");
+    //     return res.status(403).json("try-catch");
     return res.status(403).json("Error in logging in Please try again");
   }
 };

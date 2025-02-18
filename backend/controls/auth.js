@@ -3,8 +3,7 @@ const jwt = require("jsonwebtoken");
 const zod = require("zod");
 const User = require("../models/user");
 const Vehicle = require("../models/vehicle");
-const dotenv = require("dotenv");
-dotenv.config({ path: "../.env" });
+const { JWT_SECRET } = require("../config");
 
 const signupSchema = zod.object({
   email: zod.string().email(),
@@ -81,7 +80,7 @@ const signup = async (req, res) => {
       {
         userId: user._id,
       },
-      process.env.JWT_SECRET
+      JWT_SECRET
     );
 
     console.log("token when adding new user in db");
@@ -117,10 +116,7 @@ const login = async (req, res) => {
     console.log({ existingUser });
     bcrypt.compare(req.body.password, existingUser.password).then((matched) => {
       if (matched) {
-        const token = jwt.sign(
-          { userId: existingUser._id },
-          process.env.JWT_SECRET
-        );
+        const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET);
         return res.status(200).json({
           message: "Logged in successfully",
           token: token,

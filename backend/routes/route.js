@@ -6,7 +6,6 @@ const User = require("../models/user");
 const { default: mongoose } = require("mongoose");
 const { get, getall, create } = require("../controls/route");
 const Vehicle = require("../models/vehicle");
-const vehicle = require("../models/vehicle");
 
 routeRouter.post("/create", authMiddleware, create);
 routeRouter.get("/get", authMiddleware, get);

@@ -2,23 +2,28 @@ const zod = require("zod");
 const Route = require("../models/route");
 const Vehicle = require("../models/vehicle");
 const User = require("../models/user");
+const { getLatLng, getCost } = require("./cost");
 
-const routeSchema = zod.object({
-  source: zod.string(),
-  destination: zod.string(),
-  cost: zod.number(),
-  date: zod.string(),
-  time: zod.string(),
-  status: zod.string(),
-});
+// const routeSchema = zod.object({
+//   origin: zod.string(),
+//   destination: zod.string(),
+//   cost: zod.number(),
+//   date: zod.string(),
+//   time: zod.string(),
+//   status: zod.string(),
+// });
 
 const create = async (req, res) => {
   try {
     const body = req.body;
-    const success = routeSchema.safeParse(body);
+    // const success = routeSchema.safeParse(body);
+    const success = true;
     const vehicleId = await Vehicle.findOne({
       userId: req.userId,
     });
+    const vehicleType = await Vehicle.findOne({
+      _id: vehicleId,
+    }).select("vehicleType");
 
     if (!success) {
       return res.status(400).json({
@@ -49,13 +54,26 @@ const create = async (req, res) => {
         message: "You have already created a route for this time",
       });
     }
+    const { lat: originLat, lng: originLng } = await getLatLng(body.source);
+    console.log("origin: ", originLat, originLng);
+    const { lat: destinationLat, lng: destinationLng } = await getLatLng(
+      body.destination
+    );
+    console.log("destination: ", destinationLat, destinationLng);
+    const cost = await getCost({
+      originLat,
+      originLng,
+      destinationLat,
+      destinationLng,
+      vehicleType,
+    });
 
     await Route.create({
       driverId: req.userId,
       vehicleId: vehicleId,
-      source: body.source,
-      destination: body.destination,
-      cost: body.cost,
+      origin: [originLat, originLng],
+      destination: [destinationLat, destinationLng],
+      cost: cost,
       date: body.date,
       time: body.time,
       status: body.status,
