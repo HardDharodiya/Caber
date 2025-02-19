@@ -52,7 +52,7 @@ const verifyOTP = async (req, res) => {
     });
   }
 
-  if (otpCache[email] === otp) {
+  if (otpCache[email] == otp) {
     delete otpCache[email];
     return res.status(200).json({
       message: "OTP verified successfully",
