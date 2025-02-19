@@ -60,9 +60,9 @@ const app = () => {
       <Route
         path="/home"
         element={
-          <UserProtector>
+          // <UserProtector>
             <Home />
-          </UserProtector>
+          // </UserProtector>
         }
       />
       <Route

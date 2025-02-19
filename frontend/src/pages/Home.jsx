@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import logo from "../assets/20241220_120512.png";
 import map from "../assets/map.png";
 import { useGSAP } from "@gsap/react";
@@ -10,6 +10,7 @@ import ConfirmRide from "../components/ConfirmRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -26,12 +27,42 @@ const Home = () => {
   const confirmRidePanelRef = useRef(null);
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
+  const mapRef = useRef(null);
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
+    const cleanToken = token.replace(/"/g, "");
+    console.log(cleanToken);
+
+    await axios
+      .post(
+        "http://localhost:3000/api/route/create",
+        { source, destination }, // Request body
+        {
+          headers: {
+            Authorization: `Bearer ${cleanToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error.response?.data || error.message);
+      });
   };
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        mapRef.current.innerHTML = `<iframe width="700" height="467" src="https://maps.google.com/maps?q=${latitude},${longitude}&amp;z=15&amp;output=embed"></iframe>`;
+      });
+    }
+  }, []);
 
   //location panel open and close
   useGSAP(
@@ -122,12 +153,11 @@ const Home = () => {
   );
 
   return (
-
     <div className="h-screen relative overflow-hidden">
       <div>
         <img src={logo} alt="" className="w-20 absolute left-5 top-0" />
         <button
-          onClick={()=>navigate('/user-about')}
+          onClick={() => navigate("/user-about")}
           className="fixed  h-10 w-10 bg-gray-900 flex items-center justify-center rounded-full right-4 top-4"
         >
           <i className="ri-menu-line text-gray-200 text-lg font-medium"></i>
@@ -135,10 +165,9 @@ const Home = () => {
       </div>
 
       {/* map */}
-      <div className="h-screen w-screen">
+      <div className="h-screen">
         {/*map img for temporary use*/}
-
-        <img src={map} alt="" className="h-screen w-full" />
+        <div ref={mapRef} className=""></div>
       </div>
 
       {/* find ride */}
@@ -163,7 +192,6 @@ const Home = () => {
           </div>
 
           <form
-            on
             onSubmit={(e) => {
               submitHandler(e);
             }}

@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 const CaptainAboutPanle = () => {
   const navigate = useNavigate();
 
+  const handleSubmit = () => {
+    sessionStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <div className="h-screen bg-[#1E2029] p-5">
       <div onClick={() => navigate("/captain-home")}>
@@ -11,7 +16,7 @@ const CaptainAboutPanle = () => {
       </div>
       <div className="p-5">
         <div className="flex items-center gap-1 mt-2">
-          <h4 className="text-2xl font-serif text-white">Hellow Captain.</h4>
+          <h4 className="text-2xl font-serif text-white">Hello Captain.</h4>
         </div>
         <div className="w-full h-0.5 bg-slate-400 mt-2 rounded-full"></div>
       </div>
@@ -20,18 +25,22 @@ const CaptainAboutPanle = () => {
         <div className="flex flex-col gap-3">
           <div
             onClick={() => navigate("/captain-about")}
-            className="w-full h-11 bg-white flex justify-between items-center p-3 px-4 rounded-xl "><h2 className="text-lg font-semibold">About</h2>
+            className="w-full h-11 bg-white flex justify-between items-center p-3 px-4 rounded-xl "
+          >
+            <h2 className="text-lg font-semibold">About</h2>
             <i class="ri-information-2-line text-xl"></i>
           </div>
           <div
             onClick={() => navigate("/paypg")}
-            className="w-full h-11 bg-white flex justify-between items-center p-3 px-4 rounded-xl "><h2 className="text-lg font-semibold">Wallet</h2>
+            className="w-full h-11 bg-white flex justify-between items-center p-3 px-4 rounded-xl "
+          >
+            <h2 className="text-lg font-semibold">Wallet</h2>
             <i class="ri-wallet-3-line text-lg"></i>
           </div>
         </div>
         <div className="bottom-0 flex justify-center items-center w-full">
           <button
-            onClick={()=> navigate("/")}
+            onClick={handleSubmit}
             type="button"
             className="mt-8 mb-1
           flex items-center justify-center w-full bg-orange-500 text-black py-3 rounded-xl text-xl font-semibold"
@@ -40,7 +49,6 @@ const CaptainAboutPanle = () => {
           </button>
         </div>
       </div>
-
     </div>
   );
 };
