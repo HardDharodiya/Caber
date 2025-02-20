@@ -11,7 +11,7 @@ const UserAbout = () => {
             </div>
             <div className="p-5">
                 <div className="flex items-center gap-1 mt-2">
-                    <h4 className="text-2xl font-serif text-white">Hellow Captain.</h4>
+                    <h4 className="text-2xl font-serif text-white">Hello</h4>
                 </div>
                 <div className="w-full h-0.5 bg-slate-400 mt-2 rounded-full"></div>
             </div>

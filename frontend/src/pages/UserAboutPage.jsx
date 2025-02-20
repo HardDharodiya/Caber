@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import getUserData from "../utils/getUserData";
+import { getUserData } from "../utils/getUserData";
 
 const UserAboutPage = () => {
   const navigate = useNavigate();

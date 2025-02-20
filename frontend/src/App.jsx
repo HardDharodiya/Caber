@@ -30,9 +30,23 @@ const app = () => {
       <Route path="/captain-login" element={<CaptainLogin />} />
       <Route path="/captain-signup" element={<CaptainSignup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/about" element={<About />} />
+      <Route
+        path="/about"
+        element={
+          <CaptainProtector>
+            <About />
+          </CaptainProtector>
+        }
+      />
       <Route path="/payment" element={<PaymentPage />} />
-      <Route path="/paypg" element={<PayPg />} />
+      <Route
+        path="/paypg"
+        element={
+          <CaptainProtector>
+            <PayPg />
+          </CaptainProtector>
+        }
+      />
       <Route
         path="/captain-home"
         element={
@@ -60,9 +74,9 @@ const app = () => {
       <Route
         path="/home"
         element={
-          // <UserProtector>
+          <UserProtector>
             <Home />
-          // </UserProtector>
+          </UserProtector>
         }
       />
       <Route
@@ -81,7 +95,14 @@ const app = () => {
           </UserProtector>
         }
       />
-      <Route path="/user-aboutpg" element={<UserAboutPage />} />
+      <Route
+        path="/user-aboutpg"
+        element={
+          <UserProtector>
+            <UserAboutPage />
+          </UserProtector>
+        }
+      />
     </Routes>
   );
 };

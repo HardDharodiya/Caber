@@ -71,7 +71,7 @@ const UserLogin = () => {
             onClick={async () => {
               try {
                 const response = await axios.post(
-                  "http://localhost:3000/api/user/auth/signin",
+                  "http://localhost:3000/api/user/auth/login",
                   {
                     email,
                     password,

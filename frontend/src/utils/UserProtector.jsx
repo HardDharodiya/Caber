@@ -4,6 +4,7 @@ import axios from "axios";
 
 const UserProtector = ({ children }) => {
   const token = localStorage.getItem("token");
+  console.log("in user protector:", token);
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import getUserData from "../utils/getUserData";
+import { getUserData } from "../utils/getUserData";
 
 const CaptainAboutPage = () => {
   const navigate = useNavigate();

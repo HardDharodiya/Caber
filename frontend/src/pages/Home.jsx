@@ -29,28 +29,32 @@ const Home = () => {
   const waitingForDriverRef = useRef(null);
   const mapRef = useRef(null);
 
-  const submitHandler = async () => {
-    e.preventDefault();
+  const submitHandler = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
     const token = localStorage.getItem("token");
-    const cleanToken = token.replace(/"/g, "");
+    if (!token) {
+      console.error("No token found!");
+      return;
+    }
+
+    const cleanToken = token.replace(/"/g, ""); // Clean token from local storage
     console.log(cleanToken);
 
-    await axios
-      .post(
+    try {
+      const response = await axios.post(
         "http://localhost:3000/api/route/create",
-        { source, destination }, // Request body
+        { source: pickup, destination }, // Send data
         {
           headers: {
             Authorization: `Bearer ${cleanToken}`,
           },
         }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error.response?.data || error.message);
-      });
+      );
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);
+    }
   };
 
   const navigate = useNavigate();
@@ -59,7 +63,7 @@ const Home = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        mapRef.current.innerHTML = `<iframe width="700" height="467" src="https://maps.google.com/maps?q=${latitude},${longitude}&amp;z=15&amp;output=embed"></iframe>`;
+        mapRef.current.innerHTML = `<iframe class="w-full h-full" src="https://maps.google.com/maps?q=${latitude},${longitude}&amp;z=15&amp;output=embed"></iframe>`;
       });
     }
   }, []);
@@ -69,7 +73,7 @@ const Home = () => {
     function () {
       if (panelOpen) {
         gsap.to(panelRef.current, {
-          height: "70%",
+          height: "65%",
           padding: 20,
         });
         gsap.to(panelCloseRef.current, {
@@ -154,8 +158,8 @@ const Home = () => {
 
   return (
     <div className="h-screen relative overflow-hidden">
-      <div>
-        <img src={logo} alt="" className="w-20 absolute left-5 top-0" />
+      <div className="pt-10 h-[5vh]">
+        <img src={logo} alt="" className="w-20 absolute left-5 top-0 pt-3" />
         <button
           onClick={() => navigate("/user-about")}
           className="fixed  h-10 w-10 bg-gray-900 flex items-center justify-center rounded-full right-4 top-4"
@@ -165,14 +169,17 @@ const Home = () => {
       </div>
 
       {/* map */}
-      <div className="h-screen">
+      <div className="h-screen w-screen justify-center items-center">
         {/*map img for temporary use*/}
-        <div ref={mapRef} className=""></div>
+        <div
+          ref={mapRef}
+          className="h-[60vh] w-[100vw] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[85vh] bg-gray-200 shadow-lg rounded-lg overflow-hidden"
+        ></div>
       </div>
 
       {/* find ride */}
-      <div className="absolute h-screen top-0 w-full flex flex-col justify-end">
-        <div className="h-[30%] bg-gray-900 p-5 relative">
+      <div className="absolute h-screen top-0 w-full flex flex-col justify-end pointer-events-none">
+        <div className="h-[35%] bg-gray-900 p-5 relative pointer-events-auto">
           <h4 className="text-2xl font-semibold mb-5 text-white">
             Find a trip
           </h4>
@@ -187,7 +194,7 @@ const Home = () => {
             <div className="absolute top-0 w-full h-1 bg-slate-200 rounded-bl-full rounded-br-full left-0"></div>
 
             <div className="w-24 rounded-bl-full rounded-br-full bg-slate-200 h-6 absolute top-0 left-36 px-10">
-              <i class="ri-arrow-down-wide-line"></i>
+              <i className="ri-arrow-down-wide-line"></i>
             </div>
           </div>
 
@@ -206,7 +213,7 @@ const Home = () => {
               onChange={(e) => {
                 setPickup(e.target.value);
               }}
-              className="bg-gray-100 mb-3 rounded px-10 py-2  w-full text-base placeholder:text-lg"
+              className="bg-gray-100 mb-3 rounded px-10 py-2  w-full text-base placeholder:text-lg pointer-events-auto"
               type="text"
               placeholder="Pick-up location"
             />
@@ -219,14 +226,20 @@ const Home = () => {
               onChange={(e) => {
                 setDestination(e.target.value);
               }}
-              className="bg-gray-100  mb-3 rounded px-10 py-2  w-full text-base placeholder:text-lg"
+              className="bg-gray-100  mb-3 rounded px-10 py-2  w-full text-base placeholder:text-lg pointer-events-auto"
               type="text"
               placeholder="Destination location"
             />
+            <button
+              type="submit"
+              className="w-full bg-[#9A6AFF] text-white font-semibold py-2 rounded"
+            >
+              Submit
+            </button>
           </form>
         </div>
 
-        <div ref={panelRef} className="bg-gray-900 h-0">
+        <div ref={panelRef} className="bg-gray-900 h-0 pointer-events-auto">
           <LocationSearchPanel
             setPanelOpen={setPanelOpen}
             setVehiclePanel={setVehiclePanel}
