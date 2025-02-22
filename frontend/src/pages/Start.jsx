@@ -7,7 +7,7 @@ const Start = () => {
     <div>
       <div className='bg-cover  bg-right  h-screen bg-[url("./assets/landingpage_img.webp")]   flex justify-between flex-col bg-black '>
 
-        <img src={logo} alt="" className='w-20 ml-2 h-25' />
+        <img src={logo} alt="" className='w-20 ml-4 mt-4 h-25' />
 
         <div className='bg-transparent p-6'>
 
