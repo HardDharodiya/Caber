@@ -25,8 +25,8 @@ const UserProtector = ({ children }) => {
             },
           }
         );
-
-        if (response.data.isCaptain) {
+        console.log("data", response.data.user);
+        if (response.data.user.isCaptain) {
           // If the user is a captain, redirect them to captain-home
           if (location.pathname == "/riding") {
             navigate("/captain-riding");

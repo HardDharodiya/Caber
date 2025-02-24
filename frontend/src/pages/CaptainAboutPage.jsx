@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserData } from "../utils/getUserData";
+import { getUserData, getVehicleData } from "../utils/getUserData";
 
 const CaptainAboutPage = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
+  const [vehicle, setVehicle] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const user = await getUserData();
+      const vehicle = await getVehicleData();
       if (user) {
         setUserData(user);
+      }
+      if (vehicle) {
+        setVehicle(vehicle);
       }
     };
     fetchData();
@@ -70,7 +75,7 @@ const CaptainAboutPage = () => {
               <h2 className="text-sm">
                 Vehicle Information:{" "}
                 <span className="text-lg font-mono">
-                  {userData.user.vehicle?.model || "N/A"}
+                  {vehicle.vehicles?.vehicleModel || "N/A"}
                 </span>
               </h2>
               <div className="w-full h-0.5 bg-slate-400 mt-2 mb-4 rounded-full"></div>
@@ -79,26 +84,26 @@ const CaptainAboutPage = () => {
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Colour</div>
                   <div className="text-xl font-semibold">
-                    {userData.user.vehicle?.color || "N/A"}
+                    {vehicle.vehicles[0].vehicleColor || "N/A"}
                   </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Plate</div>
                   <div className="text-xl font-semibold">
-                    {userData.user.vehicle?.plate || "N/A"}
+                    {vehicle.vehicles[0].vehicleNumber || "N/A"}
                   </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Capacity</div>
                   <div className="text-xl font-semibold flex items-center gap-2">
-                    <div>{userData.user.vehicle?.capacity || "N/A"}</div>
+                    <div>{vehicle.vehicles[0].vehicleCapacity || "N/A"}</div>
                     <i className="ri-user-3-line text-lg font-thin"></i>
                   </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Type</div>
                   <div className="text-xl font-semibold">
-                    {userData.user.vehicle?.type || "N/A"}
+                    {vehicle.vehicles[0].vehicleType || "N/A"}
                   </div>
                 </div>
               </div>

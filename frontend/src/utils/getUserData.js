@@ -16,7 +16,7 @@ export const getUserData = async () => {
         Authorization: `Bearer ${cleanToken}`,
       },
     });
-
+    console.log(response.data);
     return response.data;
   } catch (err) {
     console.error("Error fetching user data:", err);
