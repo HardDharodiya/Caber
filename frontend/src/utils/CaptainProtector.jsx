@@ -29,9 +29,10 @@ const CaptainProtector = ({ children }) => {
           // If the user is not a captain, redirect them to home
           if (location.pathname == "/captain-riding") {
             navigate("/riding");
-          } else if (location.pathname == "/captain-about") {
+          }
+           if (location.pathname == "/captain-about") {
             navigate("/user-about");
-          } else {
+          } if(location.pathname == "/captain-home") {
             navigate("/home");
           }
         } else {

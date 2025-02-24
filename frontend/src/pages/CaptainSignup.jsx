@@ -196,7 +196,7 @@ const captainSignup = () => {
                 console.log(response.data.token);
                 localStorage.removeItem("token");
                 localStorage.setItem("token", response.data.token);
-                navigate("/Home");
+                navigate("/captain-home");
               } catch (error) {
                 if (error.response && error.response.status === 400) {
                   alert("Invalid input");

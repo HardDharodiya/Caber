@@ -73,7 +73,7 @@ const Home = () => {
     function () {
       if (panelOpen) {
         gsap.to(panelRef.current, {
-          height: "65%",
+          height: "70%",
           padding: 20,
         });
         gsap.to(panelCloseRef.current, {
@@ -179,7 +179,7 @@ const Home = () => {
 
       {/* find ride */}
       <div className="absolute h-screen top-0 w-full flex flex-col justify-end pointer-events-none">
-        <div className="h-[35%] bg-gray-900 p-5 relative pointer-events-auto">
+        <div className="h-[30%] bg-gray-900 p-5 relative pointer-events-auto">
           <h4 className="text-2xl font-semibold mb-5 text-white">
             Find a trip
           </h4>
@@ -226,16 +226,10 @@ const Home = () => {
               onChange={(e) => {
                 setDestination(e.target.value);
               }}
-              className="bg-gray-100  mb-3 rounded px-10 py-2  w-full text-base placeholder:text-lg pointer-events-auto"
+              className="bg-gray-100   rounded px-10 py-2  w-full text-base placeholder:text-lg pointer-events-auto"
               type="text"
               placeholder="Destination location"
             />
-            <button
-              type="submit"
-              className="w-full bg-[#9A6AFF] text-white font-semibold py-2 rounded"
-            >
-              Submit
-            </button>
           </form>
         </div>
 
@@ -244,6 +238,14 @@ const Home = () => {
             setPanelOpen={setPanelOpen}
             setVehiclePanel={setVehiclePanel}
           />
+          <div>
+            <button
+              type="submit"
+              className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </div>
 
