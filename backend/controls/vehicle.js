@@ -64,6 +64,19 @@ const getVehicle = async (req, res) => {
   }
 };
 
+const getVehicleById = async (req, res) => {
+  const vehicleId = req.body.vehicleId;
+  const vehicle = await Vehicle.findOne({ _id: vehicleId });
+  if (!vehicle) {
+    return res.status(400).json({
+      message: "Vehicle not found",
+    });
+  }
+  res.status(200).json({
+    vehicle,
+  });
+};
+
 const removeVehicle = async (req, res) => {
   try {
     const vehicleId = req.query.vehicleId;
@@ -84,4 +97,4 @@ const removeVehicle = async (req, res) => {
   }
 };
 
-module.exports = { addVehicle, getVehicle, removeVehicle };
+module.exports = { addVehicle, getVehicle, getVehicleById, removeVehicle };

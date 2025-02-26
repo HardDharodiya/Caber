@@ -4,12 +4,13 @@ const { authMiddleware } = require("../middlewares");
 const Route = require("../models/route");
 const User = require("../models/user");
 const { default: mongoose } = require("mongoose");
-const { get, getall, create } = require("../controls/route");
+const { get, create, getAll, getById } = require("../controls/route");
 const Vehicle = require("../models/vehicle");
 
 routeRouter.post("/create", authMiddleware, create);
 routeRouter.get("/get", authMiddleware, get);
-routeRouter.get("/getall", authMiddleware, getall);
+routeRouter.get("/bulk", authMiddleware, getAll);
+routeRouter.get("/getById", authMiddleware, getById);
 
 routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
   try {
@@ -80,4 +81,5 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 module.exports = routeRouter;

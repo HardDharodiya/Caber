@@ -7,6 +7,7 @@ const {
   addVehicle,
   getVehicle,
   removeVehicle,
+  getVehicleById,
 } = require("../controls/vehicle");
 const { verifyOTP, reqOTP, changePassword } = require("../controls/verifyAuth");
 
@@ -17,6 +18,7 @@ userRouter.post("/verifyOTP", verifyOTP);
 userRouter.post("/changePassword", changePassword);
 userRouter.post("/addVehicle", authMiddleware, addVehicle);
 userRouter.get("/getVehicle", authMiddleware, getVehicle);
+userRouter.get("/getVehicleById", authMiddleware, getVehicleById);
 userRouter.get("/removeVehicle", authMiddleware, removeVehicle);
 
 userRouter.get("/getUser", authMiddleware, async (req, res) => {
@@ -37,12 +39,14 @@ userRouter.get("/getUser", authMiddleware, async (req, res) => {
     });
   }
 });
-userRouter.get("/getCaptain", authMiddleware, async (req, res) => {
+
+userRouter.get("/getById", authMiddleware, async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.userId }).select("isCaptain");
+    const users = req.body.userId;
+    const user = await User.findOne({ _id: users });
     if (!user) {
       return res.status(400).json({
-        message: "not found",
+        message: "User not found",
       });
     }
     res.status(200).json({
@@ -51,10 +55,11 @@ userRouter.get("/getCaptain", authMiddleware, async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Internal server error",
+      message: "Internal Server Error",
     });
   }
 });
+
 userRouter.post("/toggleCaptain", authMiddleware, async (req, res) => {
   try {
     if (!req.body.isCaptain) {
@@ -68,7 +73,6 @@ userRouter.post("/toggleCaptain", authMiddleware, async (req, res) => {
       { $set: { isCaptain: req.body.isCaptain } },
       { new: true }
     );
-    // console.log("thins" + user);
     if (!user) {
       return res.status(400).json({
         message: "User not found",

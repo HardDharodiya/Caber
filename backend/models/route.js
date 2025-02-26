@@ -11,7 +11,15 @@ const routeSchema = mongoose.Schema({
     ref: "Vehicle",
     required: true,
   },
-  origin: [
+  origin: {
+    type: String,
+    required: true,
+  },
+  destination: {
+    type: String,
+    required: true,
+  },
+  originCoords: [
     {
       type: Number,
       required: true,
@@ -21,7 +29,7 @@ const routeSchema = mongoose.Schema({
       required: true,
     },
   ],
-  destination: [
+  destinationCoords: [
     {
       type: Number,
       required: true,
