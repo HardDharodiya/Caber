@@ -17,7 +17,6 @@ import CaptainAboutPage from "./pages/CaptainAboutPage";
 import UserAbout from "./pages/UserAbout";
 import UserPayPg from "./pages/UserPayPg";
 import UserAboutPage from "./pages/UserAboutPage";
-import CaptainProtector from "./utils/captainProtector";
 import UserProtector from "./utils/userProtector";
 
 const app = () => {
@@ -30,45 +29,45 @@ const app = () => {
       <Route path="/captain-login" element={<CaptainLogin />} />
       <Route path="/captain-signup" element={<CaptainSignup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/payment" element={<PaymentPage />} />
       <Route
         path="/about"
         element={
-          <CaptainProtector>
+          <UserProtector>
             <About />
-          </CaptainProtector>
+          </UserProtector>
         }
       />
-      <Route path="/payment" element={<PaymentPage />} />
       <Route
         path="/paypg"
         element={
-          <CaptainProtector>
+          <UserProtector>
             <PayPg />
-          </CaptainProtector>
+          </UserProtector>
         }
       />
       <Route
         path="/captain-home"
         element={
-          <CaptainProtector>
+          <UserProtector>
             <CaptainHome />
-          </CaptainProtector>
+          </UserProtector>
         }
       />
       <Route
         path="/captain-riding"
         element={
-          <CaptainProtector>
+          <UserProtector>
             <CaptainRiding />
-          </CaptainProtector>
+          </UserProtector>
         }
       />
       <Route
         path="/captain-about"
         element={
-          <CaptainProtector>
+          <UserProtector>
             <CaptainAboutPage />
-          </CaptainProtector>
+          </UserProtector>
         }
       />
       <Route

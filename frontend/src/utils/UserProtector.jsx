@@ -4,7 +4,7 @@ import axios from "axios";
 
 const UserProtector = ({ children }) => {
   const token = localStorage.getItem("token");
-  console.log("in user protector:", token);
+  // console.log("in user protector:", token);
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
@@ -25,16 +25,35 @@ const UserProtector = ({ children }) => {
             },
           }
         );
-        console.log("data", response.data.user);
+        // console.log("data", response.data.user);
         if (response.data.user.isCaptain) {
           // If the user is a captain, redirect them to captain-home
           if (location.pathname == "/riding") {
             navigate("/captain-riding");
           } else if (location.pathname == "/user-about") {
+            navigate("/about");
+          } else if (location.pathname == "/user-aboutpg") {
             navigate("/captain-about");
-          } else {
+          } else if (location.pathname == "/user-paypg") {
+            navigate("/paypg");
+          } else if (location.pathname == "/Home") {
             navigate("/captain-home");
           }
+          setIsLoading(false);
+        } else if (!response.data.user.isCaptain) {
+          // If the user is a captain, redirect them to captain-home
+          if (location.pathname == "/captain-riding") {
+            navigate("/riding");
+          } else if (location.pathname == "/about") {
+            navigate("/user-about");
+          } else if (location.pathname == "/captain-about") {
+            navigate("/user-aboutpg");
+          } else if (location.pathname == "/paypg") {
+            navigate("/user-paypg");
+          } else if (location.pathname == "/captain-home") {
+            navigate("/home");
+          }
+          setIsLoading(false);
         } else {
           setIsLoading(false);
         }

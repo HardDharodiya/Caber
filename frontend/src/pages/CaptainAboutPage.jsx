@@ -75,7 +75,7 @@ const CaptainAboutPage = () => {
               <h2 className="text-sm">
                 Vehicle Information:{" "}
                 <span className="text-lg font-mono">
-                  {vehicle.vehicles?.vehicleModel || "N/A"}
+                  {vehicle.vehicles[0].vehicleModel || "N/A"}
                 </span>
               </h2>
               <div className="w-full h-0.5 bg-slate-400 mt-2 mb-4 rounded-full"></div>
