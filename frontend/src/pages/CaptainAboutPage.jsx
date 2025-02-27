@@ -73,7 +73,7 @@ const CaptainAboutPage = () => {
               <h2 className="text-sm">
                 Vehicle Information:{" "}
                 <span className="text-lg font-mono">
-                  {vehicle.vehicles[0].vehicleModel || "N/A"}
+                  {vehicle?.vehicles[0]?.vehicleModel || "N/A"}
                 </span>
               </h2>
               <div className="w-full h-0.5 bg-slate-400 mt-2 mb-4 rounded-full"></div>
@@ -82,26 +82,26 @@ const CaptainAboutPage = () => {
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Colour</div>
                   <div className="text-xl font-semibold">
-                    {vehicle.vehicles[0].vehicleColor || "N/A"}
+                    {vehicle?.vehicles[0]?.vehicleColor || "N/A"}
                   </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Plate</div>
                   <div className="text-xl font-semibold">
-                    {vehicle.vehicles[0].vehicleNumber || "N/A"}
+                    {vehicle?.vehicles[0]?.vehicleNumber || "N/A"}
                   </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Capacity</div>
                   <div className="text-xl font-semibold flex items-center gap-2">
-                    <div>{vehicle.vehicles[0].vehicleCapacity || "N/A"}</div>
+                    <div>{vehicle?.vehicles[0]?.vehicleCapacity || "N/A"}</div>
                     <i className="ri-user-3-line text-lg font-thin"></i>
                   </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Vehicle Type</div>
                   <div className="text-xl font-semibold">
-                    {vehicle.vehicles[0].vehicleType || "N/A"}
+                    {vehicle?.vehicles[0]?.vehicleType || "N/A"}
                   </div>
                 </div>
               </div>

@@ -3,7 +3,11 @@ import car from "../assets/Car.webp";
 import moto from "../assets/moto.webp";
 import auto from "../assets/auto.webp";
 
-const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
+const VehiclePanel = ({
+  setVehiclePanel,
+  setConfirmRidePanel,
+  setVehicleType,
+}) => {
   return (
     <div>
       <div
@@ -26,6 +30,7 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
       <div
         className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
         onClick={() => {
+          setVehicleType("car");
           setConfirmRidePanel(true);
           setVehiclePanel(false);
         }}
@@ -52,6 +57,7 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
       <div
         className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
         onClick={() => {
+          setVehicleType("moto");
           setConfirmRidePanel(true);
           setVehiclePanel(false);
         }}
@@ -78,6 +84,7 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
       <div
         className="flex border-4 items-center mb-3 justify-between w-full border-[#fdfdfd] bg-[#fdfdfd] p-2 active:border-[#9A6AFF] rounded-2xl"
         onClick={() => {
+          setVehicleType("auto");
           setConfirmRidePanel(true);
           setVehiclePanel(false);
         }}

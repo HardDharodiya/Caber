@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import User from "../assets/dummy-user.jpg";
-import { getRouteData } from "../utils/getUserData";
+import { getRouteData, getUserById } from "../utils/getUserData";
 
 const RidePopUp = (props) => {
   const [route, setRoute] = useState(null);
+  const [user, setUser] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentRide = route?.routes?.[currentIndex];
 
@@ -19,6 +20,10 @@ const RidePopUp = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const routes = await getRouteData();
+      const user = await getUserById(routes?.routes?.[0]?.userId);
+      if (user) {
+        setUser(user);
+      }
       if (routes) {
         setRoute(routes);
       }
@@ -41,8 +46,12 @@ const RidePopUp = (props) => {
                 alt=""
                 className="h-10 w-10 rounded-full object-cover"
               />
+              {console.log("user", user)}
               <h4 className="text-lg font-medium text-white">
-                {currentRide.origin}
+                {user?.user?.firstName.charAt(0).toUpperCase() +
+                  user?.user?.firstName.slice(1) +
+                  " " +
+                  user?.user?.lastName || "N/A"}
               </h4>
             </div>
 
@@ -50,7 +59,9 @@ const RidePopUp = (props) => {
               <h3 className="text-xl font-medium text-green-500">
                 {"₹" + currentRide.cost}
               </h3>
-              <p className="text-lg mt-1 text-gray-200">2.2 KM</p>
+              <p className="text-lg mt-1 text-gray-200">
+                {currentRide.distance + " KM" || "N/A"}
+              </p>
             </div>
           </div>
 
@@ -86,6 +97,7 @@ const RidePopUp = (props) => {
                 onClick={() => {
                   props.setConfirmRidePopUpPanel(true);
                   props.setCurrentRide(currentRide);
+                  props.setCurrentUser(user?.user);
                   handleNextRide();
                 }}
                 className="w-full bg-[#9A6AFF] font-semibold p-4 px-8 rounded-xl"

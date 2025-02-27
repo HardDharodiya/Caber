@@ -1,12 +1,52 @@
 import React, { useState } from "react";
 import User from "../assets/dummy-user.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ConfirmRidePopUp = (props) => {
   const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!otp) {
+      alert("Please enter OTP before confirming the ride.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found!");
+      alert("Authentication error. Please log in again.");
+      return;
+    }
+
+    const cleanToken = token.replace(/"/g, ""); // Removing unwanted quotes
+    console.log("cleanToken:", cleanToken);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/route/acceptRoute",
+        {
+          routeId: props.currentRide?._id, // Using optional chaining to prevent errors
+          otp: otp, // Sending OTP
+        },
+        {
+          headers: { Authorization: `Bearer ${cleanToken}` },
+        }
+      );
+
+      console.log("Ride accepted successfully:", response.data);
+      alert("Ride confirmed!");
+
+      // You can close the popups after successful confirmation
+      props.setConfirmRidePopUpPanel(false);
+      props.setRidePopUpPanel(false);
+    } catch (error) {
+      console.error("Error confirming ride:", error);
+      alert("Failed to confirm the ride. Please try again.");
+    }
   };
 
   return (
@@ -32,29 +72,38 @@ const ConfirmRidePopUp = (props) => {
         <div className="flex items-center gap-3">
           <img
             src={User}
-            alt=""
+            alt="User"
             className="h-10 w-10 rounded-full object-cover"
           />
-          <h4 className="text-lg font-medium text-white">Pratham Kukadiya</h4>
+          <h4 className="text-lg font-medium text-white">
+            {props.currentUser?.firstName.charAt(0).toUpperCase() +
+              props.currentUser?.firstName.slice(1) +
+              " " +
+              props.currentUser?.lastName || "N/A"}
+          </h4>
         </div>
 
         <div>
           <h3 className="text-xl font-medium text-green-500">
-            {"₹" + props.currentRide?.cost || "N/A"}
+            {"₹" + (props.currentRide?.cost || "N/A")}
           </h3>
-          <p className="text-lg mt-1 text-gray-200">2.2 KM</p>
+          <p className="text-lg mt-1 text-gray-200">
+            {props.currentRide?.distance + "KM" || "N/A"}
+          </p>
         </div>
       </div>
 
       <div className="flex gap-3 justify-between flex-col items-center">
         <div className="w-full bg-[#fdfdfd] p-3 rounded-xl gap-3 my-2">
-          <div className=" flex items-center gap-5">
+          <div className="flex items-center gap-5">
             <i className="ri-map-pin-user-fill text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">Pickup Location</h3>
               <p className="text-sm mt-1 text-gray-600">
-                {props.currentRide?.origin.charAt(0).toUpperCase() +
-                  props.currentRide?.origin.slice(1) || "N/A"}
+                {props.currentRide?.origin
+                  ? props.currentRide.origin.charAt(0).toUpperCase() +
+                    props.currentRide.origin.slice(1)
+                  : "N/A"}
               </p>
             </div>
           </div>
@@ -64,10 +113,12 @@ const ConfirmRidePopUp = (props) => {
           <div className="flex items-center gap-5">
             <i className="ri-map-pin-2-fill text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">Drop-off Location</h3>
               <p className="text-sm mt-1 text-gray-600">
-                {props.currentRide?.destination.charAt(0).toUpperCase() +
-                  props.currentRide?.destination.slice(1) || "N/A"}
+                {props.currentRide?.destination
+                  ? props.currentRide.destination.charAt(0).toUpperCase() +
+                    props.currentRide.destination.slice(1)
+                  : "N/A"}
               </p>
             </div>
           </div>
@@ -75,27 +126,31 @@ const ConfirmRidePopUp = (props) => {
 
         <div className="mt-1 w-full">
           <form
-            onSubmit={(e) => {
-              submitHandler(e);
-            }}
+            onSubmit={submitHandler}
             className="flex flex-col h-72 justify-between pb-5 gap-4"
           >
             <input
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               type="text"
-              placeholder="Enter otp"
-              className="px-6 py-3 font-mono text-lg rounded-xl w-full mb-6 "
+              placeholder="Enter OTP"
+              className="px-6 py-3 font-mono text-lg rounded-xl w-full mb-6"
             />
             <div className="flex flex-col justify-between gap-3">
-              <Link
-                to={`/captain-riding?origin=${props.currentRide?.origin}&destination=${props.currentRide?.destination}&cost=${props.currentRide?.cost}`}
+              <button
+                type="submit"
                 className="w-full bg-[#9A6AFF] font-semibold p-3 rounded-xl text-center"
+                onClick={() => {
+                  navigate(
+                    `/captain-riding?origin=${props.currentRide?.origin}&destination=${props.currentRide?.destination}&cost=${props.currentRide?.cost}`
+                  );
+                }}
               >
                 Confirm
-              </Link>
+              </button>
 
               <button
+                type="button"
                 onClick={() => {
                   props.setConfirmRidePopUpPanel(false);
                   props.setRidePopUpPanel(false);

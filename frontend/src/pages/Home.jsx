@@ -20,6 +20,8 @@ const Home = () => {
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingForDriver, setWaitingForDriver] = useState(false);
+  const [vehicleType, setVehicleType] = useState(null);
+  const [routeStatus, setRouteStatus] = useState(null);
 
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
@@ -28,38 +30,61 @@ const Home = () => {
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
   const mapRef = useRef(null);
+  const navigate = useNavigate();
 
-  const submitHandler = async (e) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found!");
+    return;
+  }
+
+  const cleanToken = token.replace(/"/g, "");
+  console.log(cleanToken);
+  const createRoute = async (e) => {
     // e.preventDefault();
     setVehiclePanel(true);
     setPanelOpen(false); // Prevent default form submission
 
-    // const token = localStorage.getItem("token");
-    // if (!token) {
-    //   console.error("No token found!");
-    //   return;
-    // }
-
-    // const cleanToken = token.replace(/"/g, ""); // Clean token from local storage
-    // console.log(cleanToken);
-
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:3000/api/route/create",
-    //     { source: pickup, destination }, // Send data
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${cleanToken}`,
-    //       },
-    //     }
-    //   );
-    //   console.log("Response:", response.data);
-    // } catch (error) {
-    //   console.error("Error:", error.response?.data || error.message);
-    // }
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/route/create",
+        { source: pickup, destination, vehicleType, status: "pending" },
+        {
+          headers: {
+            Authorization: `Bearer ${cleanToken}`,
+          },
+        }
+      );
+      console.log("Response:", await response.data);
+      localStorage.setItem("routeId", response.data.routeId);
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);
+    }
   };
 
-  const navigate = useNavigate();
+  const routeStatusCheck = async () => {
+    const routeId = localStorage.getItem("routeId");
+    console.log("routeId:", routeId);
+    const response = await axios.get(
+      "http://localhost:3000/api/route/getById",
+      {
+        headers: {
+          Authorization: `Bearer ${cleanToken}`,
+        },
+        routeId,
+      }
+    );
+    console.log(response.data);
+    setRouteStatus(response.data.route.status);
+    if (response.data.route.status === "accepted") {
+      setWaitingForDriver(true);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(routeStatusCheck, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -240,7 +265,10 @@ const Home = () => {
             <button
               type="submit"
               className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
-              onClick={submitHandler}
+              onClick={() => {
+                setPanelOpen(false);
+                setVehiclePanel(true);
+              }}
             >
               Submit
             </button>
@@ -256,6 +284,7 @@ const Home = () => {
         <VehiclePanel
           setVehiclePanel={setVehiclePanel}
           setConfirmRidePanel={setConfirmRidePanel}
+          setVehicleType={setVehicleType}
         />
       </div>
 
@@ -265,8 +294,11 @@ const Home = () => {
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
         <ConfirmRide
+          pickup={pickup}
+          destination={destination}
           setConfirmRidePanel={setConfirmRidePanel}
           setVehicleFound={setVehicleFound}
+          createRoute={createRoute}
         />
       </div>
 
@@ -275,7 +307,10 @@ const Home = () => {
         ref={vehicleFoundRef}
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
-        <LookingForDriver setVehicleFound={setVehicleFound} />
+        <LookingForDriver
+          setVehicleFound={setVehicleFound}
+          setWaitingForDriver={setWaitingForDriver}
+        />
       </div>
 
       {/*Waition for driver*/}

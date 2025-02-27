@@ -27,16 +27,16 @@ export const getUserById = async (userId) => {
   }
 
   const cleanToken = token.replace(/"/g, "");
-  console.log("Token:", cleanToken);
+  console.log("Token in getbyid:", cleanToken);
 
   const response = await axios.get(
     "http://localhost:3000/api/user/getById",
-    { userId },
     {
       headers: {
         Authorization: `Bearer ${cleanToken}`,
       },
-    }
+    },
+    { userId }
   );
   console.log(response.data);
   return response.data;
@@ -76,12 +76,12 @@ export const getVehicleById = async (vehicleId) => {
 
   const response = await axios.get(
     "http://localhost:3000/api/user/getVehicleById",
-    { vehicleId },
     {
       headers: {
         Authorization: `Bearer ${cleanToken}`,
       },
-    }
+    },
+    { vehicleId }
   );
   console.log(response.data);
   return response.data;
@@ -99,18 +99,18 @@ export const getRouteById = async (routeId) => {
 
   const response = await axios.get(
     "http://localhost:3000/api/route/getById",
-    { routeId },
     {
       headers: {
         Authorization: `Bearer ${cleanToken}`,
       },
-    }
+    },
+    { routeId }
   );
   console.log(response.data);
   return response.data;
 };
 
-export const getRouteData = async() => {
+export const getRouteData = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
@@ -118,13 +118,11 @@ export const getRouteData = async() => {
   }
   const clearToken = token.replace(/"/g, "");
   console.log("Token:", clearToken);
-  const response = await axios.get(
-    "http://localhost:3000/api/route/getAll",
-    {
-      headers: {
-        Authorization: `Bearer ${clearToken}`,
-      },
-    });
-    console.log(response.data);
-    return response.data;
-}
+  const response = await axios.get("http://localhost:3000/api/route/getAll", {
+    headers: {
+      Authorization: `Bearer ${clearToken}`,
+    },
+  });
+  console.log(response.data);
+  return response.data;
+};
