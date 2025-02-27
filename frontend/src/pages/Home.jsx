@@ -30,7 +30,8 @@ const Home = () => {
   const mapRef = useRef(null);
 
   const submitHandler = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
+    setPanelOpen(true); // Prevent default form submission
 
     const token = localStorage.getItem("token");
     if (!token) {
@@ -198,11 +199,7 @@ const Home = () => {
             </div>
           </div>
 
-          <form
-            onSubmit={(e) => {
-              submitHandler(e);
-            }}
-          >
+          <form>
             <div className="line absolute h-14 w-1 top-[45%]  rounded-lg left-10 bg-[#9A6AFF]"></div>
 
             <input
@@ -242,6 +239,7 @@ const Home = () => {
             <button
               type="submit"
               className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+              onClick={submitHandler}
             >
               Submit
             </button>

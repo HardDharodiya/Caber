@@ -6,19 +6,7 @@ import axios from "axios";
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userDate, setUserData] = useState({});
   const navigate = useNavigate();
-
-  const submitHandller = (e) => {
-    e.preventDefault();
-    setUserData({
-      email: email,
-      password: password,
-    });
-    setEmail("");
-    setPassword("");
-    console.log(userDate);
-  };
 
   // useEffect(()=>{
   //   console.log(userDate)

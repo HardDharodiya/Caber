@@ -109,3 +109,22 @@ export const getRouteById = async (routeId) => {
   console.log(response.data);
   return response.data;
 };
+
+export const getRouteData = async() => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found");
+    return null;
+  }
+  const clearToken = token.replace(/"/g, "");
+  console.log("Token:", clearToken);
+  const response = await axios.get(
+    "http://localhost:3000/api/route/getAll",
+    {
+      headers: {
+        Authorization: `Bearer ${clearToken}`,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+}

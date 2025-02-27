@@ -63,7 +63,7 @@ const CaptainHome = () => {
   return (
     <div className="h-screen relative">
       <div className="h-[5%]">
-        <img src={logo} alt="" className="w-20 absolute left-5 top-0" />
+        <img src={logo} alt="" className="w-20 absolute left-5 top-6" />
         <button
           className="fixed  h-10 w-10 bg-gray-900 flex items-center justify-center rounded-full right-4 top-4"
           onClick={() => navigate("/about")}
