@@ -71,8 +71,8 @@ const getCost = async (props) => {
         (distanceTime.duration.value / 60) * perMinuteRate.moto
     ),
   };
-  console.log(props.vehicleType);
-  console.log(cost[props.vehicleType.vehicleType]);
+  console.log("cost:" + props.vehicleType);
+  console.log(cost[props.vehicleType]);
   return cost[props.vehicleType.vehicleType];
 };
 

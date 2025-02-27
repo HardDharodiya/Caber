@@ -9,25 +9,25 @@ const create = async (req, res) => {
     const vehicleId = await Vehicle.findOne({
       userId: req.userId,
     });
-    const vehicleType = await Vehicle.findOne({
-      _id: vehicleId,
-    }).select("vehicleType");
+    const vehicleType = req.body;
 
     console.log(req.userId);
-    const isCaptain = await User.findOne({
-      _id: req.userId,
-      isCaptain: true,
-    });
-    console.log(isCaptain);
+    // const isCaptain = await User.findOne({
+    //   _id: req.userId,
+    //   isCaptain: true,
+    // });
+    // console.log(isCaptain);
 
-    if (!isCaptain) {
-      return res.status(403).json({
-        message: "To create a route you need to be a captain",
-      });
-    }
+    // if (!isCaptain) {
+    //   return res.status(403).json({
+    //     message: "To create a route you need to be a captain",
+    //   });
+    // }
 
     const existingRoute = await Route.findOne({
       userId: req.userId,
+      origin: body.source,
+      destination: body.destination,
       date: body.date,
       time: body.time,
     });
@@ -56,29 +56,26 @@ const create = async (req, res) => {
       destinationLat,
       destinationLng,
       vehicleType,
-    })
+    });
     const distance = distanceTime.distance.value / 1000;
     await Route.create({
-      driverId: req.userId,
-      vehicleId: vehicleId,
+      userId: req.userId,
       origin: body.source,
       destination: body.destination,
       originCoords: [originLat, originLng],
       destinationCoords: [destinationLat, destinationLng],
       cost: cost,
-      date: body.date,
-      time: body.time,
       status: body.status,
       distance: distance,
     });
     const routeId = await Route.findOne({
-      driverId: req.userId,
-      date: body.date,
-      time: body.time,
+      userId: req.userId,
+      origin: body.source,
+      destination: body.destination,
     }).select("_id");
 
     res.status(201).json({
-      routeId,
+      routeId: routeId._id,
       message: "Route created successfully",
     });
   } catch (err) {
@@ -102,17 +99,17 @@ const get = async (req, res) => {
   }
 };
 
-const getAll = async(req,res)=>{
-  try{
+const getAll = async (req, res) => {
+  try {
     const routes = await Route.find();
     res.status(200).json({
       routes,
     });
-  }catch(err){
+  } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
-}
+};
 
 const bulk = async (req, res) => {
   try {
@@ -152,4 +149,4 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { create, get, getAll, bulk , getById};
+module.exports = { create, get, getAll, bulk, getById };

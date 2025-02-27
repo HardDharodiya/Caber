@@ -83,4 +83,23 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
   }
 });
 
+routeRouter.post("/acceptRoute", authMiddleware, async (req, res) => {
+  try {
+    const routeId = req.body.routeId;
+    const route = await Route.findOne({ _id: routeId });
+    if (!route) {
+      return res.status(400).json({ message: "Route not found" });
+    }
+    const updatedRoute = await Route.findByIdAndUpdate(
+      routeId,
+      { status: "accepted" },
+      { new: true }
+    );
+    res.status(200).json({ msg: "Route accepted" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = routeRouter;

@@ -42,7 +42,7 @@ userRouter.get("/getUser", authMiddleware, async (req, res) => {
 
 userRouter.get("/getById", authMiddleware, async (req, res) => {
   try {
-    const users = req.body.userId;
+    const users = req.userId;
     const user = await User.findOne({ _id: users });
     if (!user) {
       return res.status(400).json({

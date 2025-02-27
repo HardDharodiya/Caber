@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const routeSchema = mongoose.Schema({
-  driverId: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -9,7 +9,6 @@ const routeSchema = mongoose.Schema({
   vehicleId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Vehicle",
-    required: true,
   },
   origin: {
     type: String,
@@ -19,7 +18,7 @@ const routeSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  distance:{
+  distance: {
     type: Number,
     required: true,
   },
