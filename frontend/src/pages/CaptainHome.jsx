@@ -14,6 +14,7 @@ const CaptainHome = () => {
 
   const [ridePopUpPanel, setRidePopUpPanel] = useState(true);
   const [confirmRidePopUpPanel, setConfirmRidePopUpPanel] = useState(false);
+  const [currentRide, setCurrentRide] = useState(null);
 
   const ridePopUpPanelRef = useRef(null);
   const confirmRidePopUpPanelRef = useRef(null);
@@ -92,6 +93,7 @@ const CaptainHome = () => {
           <RidePopUp
             setRidePopUpPanel={setRidePopUpPanel}
             setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
+            setCurrentRide={setCurrentRide}
           />
         </div>
 
@@ -102,6 +104,7 @@ const CaptainHome = () => {
           <ConfirmRidePopUp
             setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
             setRidePopUpPanel={setRidePopUpPanel}
+            currentRide={currentRide}
           />
         </div>
       </div>

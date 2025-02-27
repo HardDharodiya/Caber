@@ -30,32 +30,33 @@ const Home = () => {
   const mapRef = useRef(null);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-    setPanelOpen(true); // Prevent default form submission
+    // e.preventDefault();
+    setVehiclePanel(true);
+    setPanelOpen(false); // Prevent default form submission
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found!");
-      return;
-    }
+    // const token = localStorage.getItem("token");
+    // if (!token) {
+    //   console.error("No token found!");
+    //   return;
+    // }
 
-    const cleanToken = token.replace(/"/g, ""); // Clean token from local storage
-    console.log(cleanToken);
+    // const cleanToken = token.replace(/"/g, ""); // Clean token from local storage
+    // console.log(cleanToken);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/route/create",
-        { source: pickup, destination }, // Send data
-        {
-          headers: {
-            Authorization: `Bearer ${cleanToken}`,
-          },
-        }
-      );
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-    }
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:3000/api/route/create",
+    //     { source: pickup, destination }, // Send data
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${cleanToken}`,
+    //       },
+    //     }
+    //   );
+    //   console.log("Response:", response.data);
+    // } catch (error) {
+    //   console.error("Error:", error.response?.data || error.message);
+    // }
   };
 
   const navigate = useNavigate();

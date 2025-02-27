@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserData, getVehicleData } from "../utils/getUserData";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 const CaptainAboutPage = () => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState(null);
+  const { captainData } = useContext(CaptainDataContext);
   const [vehicle, setVehicle] = useState(null);
 
+  console.log("captainData", captainData);
   useEffect(() => {
     const fetchData = async () => {
-      const user = await getUserData();
       const vehicle = await getVehicleData();
-      if (user) {
-        setUserData(user);
-      }
       if (vehicle) {
         setVehicle(vehicle);
       }
@@ -34,7 +32,7 @@ const CaptainAboutPage = () => {
         </div>
 
         {/* User Information */}
-        {userData ? (
+        {captainData ? (
           <div className="flex flex-col gap-4 mt-4 px-4">
             {/* Name */}
             <div>
@@ -45,14 +43,14 @@ const CaptainAboutPage = () => {
                 <div className="flex flex-col gap-1 text-black rounded-xl pl-3 py-2">
                   <div className="text-sm text-gray-500">First Name</div>
                   <div className="text-xl font-semibold">
-                    {userData.user.firstName || "N/A"}
+                    {captainData.user.firstName || "N/A"}
                   </div>
                 </div>
                 <div className="bg-gray-200 h-14 rounded-full w-0.5"></div>
                 <div className="flex flex-col gap-1 text-black rounded-xl pr-3 py-2">
                   <div className="text-sm text-gray-500">Last Name</div>
                   <div className="text-xl font-semibold">
-                    {userData.user.lastName || "N/A"}
+                    {captainData.user.lastName || "N/A"}
                   </div>
                 </div>
               </div>
@@ -65,7 +63,7 @@ const CaptainAboutPage = () => {
 
               <div className="flex justify-between bg-white w-full rounded-xl px-2 items-center">
                 <div className="text-lg font-mono text-black py-2">
-                  {userData.user.email || "N/A"}
+                  {captainData.user.email || "N/A"}
                 </div>
               </div>
             </div>
@@ -116,7 +114,7 @@ const CaptainAboutPage = () => {
 
               <div className="flex justify-between bg-white w-full rounded-xl px-2 items-center">
                 <div className="text-lg font-mono text-black py-2">
-                  {userData.user.licenseNumber || "xxxx xxxx xxxx"}
+                  {captainData.user.licenseNumber || "xxxx xxxx xxxx"}
                 </div>
               </div>
             </div>

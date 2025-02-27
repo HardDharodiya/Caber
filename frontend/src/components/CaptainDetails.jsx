@@ -1,37 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import User from "../assets/dummy-user.jpg";
-import { getUserData } from "../utils/getUserData";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 const CaptainDetails = () => {
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const user = await getUserData();
-      if (user) {
-        setUserData(user);
-      }
-    };
-    fetchData();
-  }, []);
+  const { captainData } = useContext(CaptainDataContext);
+  console.log("captainData", captainData);
   return (
     <div className="flex flex-col justify-between gap-2">
       <div className="flex justify-between items-center m-2">
         <div className="flex justify-between items-center gap-3">
           <img
             src={User}
-            alt=""
+            alt="Captain"
             className="h-10 w-10 rounded-full object-cover"
           />
           <h4 className="text-lg font-medium text-white">
-            {userData?.user?.firstName + " " + userData?.user?.lastName ||
-              "N/A"}
+            {captainData?.user?.firstName.charAt(0).toUpperCase() +
+              captainData?.user?.firstName.slice(1) +
+              " " +
+              captainData?.user?.lastName || "N/A"}
           </h4>
         </div>
 
         <div>
           <h4 className="text-xl font-semibold text-green-500">
-            {"₹" + userData?.user?.balance || "N/A"}
+            {"₹" + captainData?.user?.balance || "N/A"}
           </h4>
           <p className="text-sm text-gray-200">Earned</p>
         </div>
@@ -52,7 +45,9 @@ const CaptainDetails = () => {
 
         <div className="text-center">
           <i className="ri-booklet-line text-3xl mb-3 font-thin"></i>
-          <h5 className="text-lg font-medium">20</h5>
+          <h5 className="text-lg font-medium">
+            {captainData?.user?.jobsCompleted || 0} {/* ✅ Fixed */}
+          </h5>
           <p className="text-xs text-gray-600">TOTAL JOBS</p>
         </div>
       </div>

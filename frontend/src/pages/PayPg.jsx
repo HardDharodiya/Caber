@@ -1,21 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserData } from "../utils/getUserData";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 const PayPg = () => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState(null);
+  const { captainData } = useContext(CaptainDataContext);
   const wallet = Math.floor(Math.random() * 10000000000);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const user = await getUserData();
-      if (user) {
-        setUserData(user);
-      }
-    };
-    fetchData();
-  }, []);
 
   return (
     <div className="h-screen bg-[#1E2029] py-4 px-4 text-white">
@@ -32,8 +22,9 @@ const PayPg = () => {
           <div className="mr-2">
             <div>
               <div className="font-bold text-lg">
-                {userData?.user?.firstName + " " + userData?.user?.lastName ||
-                  "N/A"}
+                {captainData?.user?.firstName +
+                  " " +
+                  captainData?.user?.lastName || "N/A"}
               </div>
               <div className="font-mono text-lg">{"W no - " + wallet}</div>
             </div>
@@ -44,7 +35,7 @@ const PayPg = () => {
           <div>
             <div className="flex flex-col items-end">
               <div className="text-green-600 font-bold text-xl">
-                {"₹ " + userData?.user?.balance || "N/A"}
+                {"₹ " + captainData?.user?.balance || "N/A"}
               </div>
               <div className="font-semibold text-sm">
                 <span>

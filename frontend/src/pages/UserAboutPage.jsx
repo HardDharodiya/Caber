@@ -1,21 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserData } from "../utils/getUserData";
+import { UserDataContext } from "../context/UserContext";
 
 const UserAboutPage = () => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = await getUserData();
-      if (user) {
-        setUserData(user);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const { userData } = useContext(UserDataContext);
 
   return (
     <div className="h-screen bg-[#1E2029] py-4 px-4 text-white">

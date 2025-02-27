@@ -1,21 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserData } from "../utils/getUserData";
+import { UserDataContext } from "../context/UserContext";
 
 const UserPayPg = () => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = await getUserData();
-      if (user) {
-        setUserData(user);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const { userData } = useContext(UserDataContext);
 
   return (
     <div className="h-screen bg-[#1E2029] py-4 px-4 text-white">
@@ -44,7 +33,7 @@ const UserPayPg = () => {
           <div>
             <div className="flex flex-col items-end">
               <div className="text-green-600 font-bold text-xl">
-                ₹ {userData?.user?.balance || "N/A"}
+                {"₹" + userData?.user?.balance || "N/A"}
               </div>
               <div className="font-semibold text-sm">
                 <span>

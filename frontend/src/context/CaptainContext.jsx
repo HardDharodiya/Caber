@@ -1,38 +1,28 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from "react";
+import { getUserData } from "../utils/getUserData";
 
-export const CaptainDataContext = createContext()
-
-
+export const CaptainDataContext = createContext();
 
 const CaptainContext = ({ children }) => {
+  const [captainData, setCaptainData] = useState(null);
 
-    const [captain,setCaptain]=useState('')
-    const [isLoading,setIsLoading]=useState(false)
-    const [error,setError]=useState('')
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await getUserData();
+      if (user) {
+        setCaptainData(user);
+      }
+    };
+    fetchData();
+  }, []);
 
-    const updateCaptain=(captainData)=>{
-        setCaptain(captainData)
-    }
+  return (
+    <div>
+      <CaptainDataContext.Provider value={{ captainData, setCaptainData }}>
+        {children}
+      </CaptainDataContext.Provider>
+    </div>
+  );
+};
 
-    const value={
-        captain,
-        setCaptain,
-        isLoading,
-        setIsLoading,
-        error,
-        setError,
-        updateCaptain,
-    }
-
-
-    return (
-        <div>
-            <CaptainDataContext.Provider value={value}>
-                {children}
-            </CaptainDataContext.Provider>
-        </div>
-    )
-}
-
-
-export default CaptainContext
+export default CaptainContext;
