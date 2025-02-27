@@ -76,4 +76,4 @@ const getCost = async (props) => {
   return cost[props.vehicleType.vehicleType];
 };
 
-module.exports = { getLatLng, getCost };
+module.exports = { getLatLng, getCost, getDistanceAndTime };

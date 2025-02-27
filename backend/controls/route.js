@@ -1,7 +1,7 @@
 const Route = require("../models/route");
 const Vehicle = require("../models/vehicle");
 const User = require("../models/user");
-const { getLatLng, getCost } = require("./cost");
+const { getLatLng, getCost, getDistanceAndTime } = require("./cost");
 
 const create = async (req, res) => {
   try {
@@ -50,7 +50,14 @@ const create = async (req, res) => {
       destinationLng,
       vehicleType,
     });
-
+    const distanceTime = await getDistanceAndTime({
+      originLat,
+      originLng,
+      destinationLat,
+      destinationLng,
+      vehicleType,
+    })
+    const distance = distanceTime.distance.value / 1000;
     await Route.create({
       driverId: req.userId,
       vehicleId: vehicleId,
@@ -62,6 +69,7 @@ const create = async (req, res) => {
       date: body.date,
       time: body.time,
       status: body.status,
+      distance: distance,
     });
     const routeId = await Route.findOne({
       driverId: req.userId,
@@ -94,7 +102,19 @@ const get = async (req, res) => {
   }
 };
 
-const getAll = async (req, res) => {
+const getAll = async(req,res)=>{
+  try{
+    const routes = await Route.find();
+    res.status(200).json({
+      routes,
+    });
+  }catch(err){
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+const bulk = async (req, res) => {
   try {
     const filter = req.query.filter || "";
     const routes = await Route.find({
@@ -132,4 +152,4 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { create, get, getAll , getById};
+module.exports = { create, get, getAll, bulk , getById};
