@@ -78,16 +78,16 @@ const CaptainHome = () => {
         {/*map img for temporary use*/}
         <div
           ref={mapRef}
-          className="h-[60vh] w-[100vw] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[85vh] bg-gray-200 shadow-lg rounded-lg overflow-hidden"
+          className="h-[65vh] w-[100vw] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[85vh] bg-gray-200 shadow-lg rounded-lg overflow-hidden"
         ></div>
 
         {/*Captains riding details*/}
-        <div className="bg-gray-900 p-4 h-[35%] flex flex-col justify-between w-full">
+        <div className="bg-gray-900 p-4 h-[30%] flex flex-col justify-between w-full">
           <CaptainDetails />
         </div>
 
         {/*new user request for ride then this pop up is work */}
-        <div
+        {/* <div
           ref={ridePopUpPanelRef}
           className="fixed w-full z-10 bottom-0 translate-y-full px-3 py-8 bg-gray-900"
         >
@@ -97,7 +97,7 @@ const CaptainHome = () => {
             setCurrentRide={setCurrentRide}
             setCurrentUser={setCurrentUser}
           />
-        </div>
+        </div> */}
 
         <div
           ref={confirmRidePopUpPanelRef}

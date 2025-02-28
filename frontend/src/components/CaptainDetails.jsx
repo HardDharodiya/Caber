@@ -7,7 +7,7 @@ const CaptainDetails = () => {
   console.log("captainData", captainData);
   return (
     <div className="flex flex-col justify-between gap-2">
-      <div className="flex justify-between items-center m-2">
+      <div className="flex justify-between items-center ">
         <div className="flex justify-between items-center gap-3">
           <img
             src={User}
@@ -30,26 +30,13 @@ const CaptainDetails = () => {
         </div>
       </div>
 
-      <div className="flex w-full justify-around bg-slate-100 p-4 rounded-2xl mt-2">
-        <div className="text-center">
-          <i className="ri-timer-2-line text-3xl mb-3 font-thin"></i>
-          <h5 className="text-lg font-medium">10.2</h5>
-          <p className="text-xs text-gray-600">HOURS ONLINE</p>
-        </div>
-
-        <div className="text-center">
-          <i className="ri-speed-up-line text-3xl mb-3 font-thin"></i>
-          <h5 className="text-lg font-medium">30 KM</h5>
-          <p className="text-xs text-gray-600">TOTAL DISTANCE</p>
-        </div>
-
-        <div className="text-center">
-          <i className="ri-booklet-line text-3xl mb-3 font-thin"></i>
-          <h5 className="text-lg font-medium">
-            {captainData?.user?.jobsCompleted || 0} {/* ✅ Fixed */}
-          </h5>
-          <p className="text-xs text-gray-600">TOTAL JOBS</p>
-        </div>
+      <div className="flex w-full justify-around p-4 rounded-2xl mt-1">
+        <button
+          type="submit"
+          className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+        >
+          Create Ride
+        </button>
       </div>
     </div>
   );
