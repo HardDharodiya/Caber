@@ -6,6 +6,9 @@ const { getLatLng, getCost, getDistanceAndTime } = require("./cost");
 const create = async (req, res) => {
   try {
     const body = req.body;
+    const { from, to, date, time } = req.body;
+    const dateTime = new Date(`${date}T${time}:00.000Z`);
+    console.log("dataTime: ", dateTime);
     const isCaptain = await User.findOne({
       _id: req.userId,
       isCaptain: true,
@@ -30,8 +33,7 @@ const create = async (req, res) => {
       driverId: req.userId,
       origin: body.source,
       destination: body.destination,
-      date: body.date,
-      time: body.time,
+      dateTime: dateTime,
     });
 
     if (existingRoute) {
@@ -64,9 +66,8 @@ const create = async (req, res) => {
       destination: body.destination,
       cost: cost,
       vehicleId: vehicleId._id,
-      date: body.date,
-      time: body.time,
-      status: body.status,
+      dateTime: dateTime,
+      status: "pending",
       distance: distance,
     });
     const routeId = await Route.findOne({
@@ -90,9 +91,24 @@ const get = async (req, res) => {
     const routes = await Route.find({
       driverId: req.userId,
     });
-
+    const ridesWithPassengerNames = await Promise.all(
+      routes.map(async (route) => {
+        if (route.passenger) {
+          const user = await User.findById(route.passenger).select(
+            "firstName lastName email"
+          );
+          console.log("user", user);
+          return {
+            ...route.toObject(),
+            passengerName: user ? `${user.firstName} ${user.lastName} ` : "N/A",
+            passengerEmail: user ? user.email : "N/A",
+          };
+        }
+        return { ...route.toObject(), passengerName: "N/A" };
+      })
+    );
     res.status(200).json({
-      routes,
+      routes: ridesWithPassengerNames,
     });
   } catch (err) {
     console.log(err);

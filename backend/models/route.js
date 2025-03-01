@@ -34,12 +34,8 @@ const routeSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  date: {
-    type: String,
-    required: true,
-  },
-  time: {
-    type: String,
+  dateTime: {
+    type: Date,
     required: true,
   },
   status: {
