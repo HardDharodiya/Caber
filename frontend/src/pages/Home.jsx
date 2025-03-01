@@ -10,89 +10,42 @@ import ConfirmRide from "../components/ConfirmRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { getbookedRides } from "../utils/getUserData";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
-  const [vehiclePanel, setVehiclePanel] = useState(false);
+  // const [vehiclePanel, setVehiclePanel] = useState(false);
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingForDriver, setWaitingForDriver] = useState(false);
-  const [vehicleType, setVehicleType] = useState(null);
-  const [routeStatus, setRouteStatus] = useState(null);
+  const [route, setRoute] = useState(null);
+  const [bookedRides, setBookedRides] = useState();
 
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
-  const vehiclePanelRef = useRef(null);
+  // const vehiclePanelRef = useRef(null);
   const confirmRidePanelRef = useRef(null);
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
   const mapRef = useRef(null);
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.error("No token found!");
-    return;
-  }
-
-  const cleanToken = token.replace(/"/g, "");
-  console.log(cleanToken);
-  const createRoute = async (e) => {
-    // e.preventDefault();
-    setVehiclePanel(true);
-    setPanelOpen(false); // Prevent default form submission
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/route/create",
-        { source: pickup, destination, vehicleType, status: "pending" },
-        {
-          headers: {
-            Authorization: `Bearer ${cleanToken}`,
-          },
-        }
-      );
-      console.log("Response:", await response.data);
-      localStorage.setItem("routeId", response.data.routeId);
-    } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-    }
-  };
-
-  const routeStatusCheck = async () => {
-    const routeId = localStorage.getItem("routeId");
-    console.log("routeId:", routeId);
-    const response = await axios.get(
-      "http://localhost:3000/api/route/getById",
-      {
-        headers: {
-          Authorization: `Bearer ${cleanToken}`,
-        },
-        routeId,
+  useEffect(() => {
+    const fetchRides = async () => {
+      const rides = await getbookedRides();
+      if (rides) {
+        setBookedRides(rides);
       }
-    );
-    console.log(response.data);
-    setRouteStatus(response.data.route.status);
-    if (response.data.route.status === "accepted") {
-      setWaitingForDriver(true);
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(routeStatusCheck, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
+    };
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
         mapRef.current.innerHTML = `<iframe class="w-full h-full" src="https://maps.google.com/maps?q=${latitude},${longitude}&amp;z=15&amp;output=embed"></iframe>`;
       });
     }
+    fetchRides();
   }, []);
 
   //location panel open and close
@@ -120,20 +73,20 @@ const Home = () => {
   );
 
   //vehical panel
-  useGSAP(
-    function () {
-      if (vehiclePanel) {
-        gsap.to(vehiclePanelRef.current, {
-          transform: "translatey(0)",
-        });
-      } else {
-        gsap.to(vehiclePanelRef.current, {
-          transform: "translatey(100%)",
-        });
-      }
-    },
-    [vehiclePanel]
-  );
+  // useGSAP(
+  //   function () {
+  //     if (vehiclePanel) {
+  //       gsap.to(vehiclePanelRef.current, {
+  //         transform: "translatey(0)",
+  //       });
+  //     } else {
+  //       gsap.to(vehiclePanelRef.current, {
+  //         transform: "translatey(100%)",
+  //       });
+  //     }
+  //   },
+  //   [vehiclePanel]
+  // );
 
   //confirm ride panel
   useGSAP(
@@ -172,7 +125,7 @@ const Home = () => {
     function () {
       if (waitingForDriver) {
         gsap.to(waitingForDriverRef.current, {
-          transform: "translatey(0)",
+          transform: "translatey(10%)",
         });
       } else {
         gsap.to(waitingForDriverRef.current, {
@@ -207,10 +160,24 @@ const Home = () => {
       {/* find ride */}
       <div className="absolute h-screen top-0 w-full flex flex-col justify-end pointer-events-none">
         <div className="h-[30%] bg-gray-900 p-5 relative pointer-events-auto">
-          <h4 className="text-2xl font-semibold mb-5 text-white">
-            Find a trip
-          </h4>
-
+          <div className="flex justify-between items-center">
+            <h4 className="text-2xl font-semibold mb-5 text-white">
+              Find a trip
+            </h4>
+            <button
+              className="mb-5 mx-3 w-[50%] bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+              onClick={() => {
+                if (!bookedRides) {
+                  alert(`You don't have any booked ride now!`);
+                  return;
+                }
+                console.log("bookedRides", bookedRides);
+                navigate("/booked-rides");
+              }}
+            >
+              Booked Ride
+            </button>
+          </div>
           <div
             className="opacity-0"
             ref={panelCloseRef}
@@ -249,7 +216,7 @@ const Home = () => {
               onChange={(e) => {
                 setDestination(e.target.value);
               }}
-              className="bg-gray-100   rounded px-10 py-2  w-full text-base placeholder:text-lg pointer-events-auto"
+              className="bg-gray-100 rounded px-10 py-2  w-full text-base placeholder:text-lg pointer-events-auto"
               type="text"
               placeholder="Destination location"
             />
@@ -259,25 +226,17 @@ const Home = () => {
         <div ref={panelRef} className="bg-gray-900 h-0 pointer-events-auto">
           <LocationSearchPanel
             setPanelOpen={setPanelOpen}
-            setVehiclePanel={setVehiclePanel}
+            pickup={pickup}
+            destination={destination}
+            setConfirmRidePanel={setConfirmRidePanel}
+            setRoute={setRoute}
+            // setVehiclePanel={setVehiclePanel}
           />
-          <div>
-            <button
-              type="submit"
-              className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
-              onClick={() => {
-                setPanelOpen(false);
-                setVehiclePanel(true);
-              }}
-            >
-              Submit
-            </button>
-          </div>
         </div>
       </div>
 
       {/* vehicle panel */}
-      <div
+      {/* <div
         ref={vehiclePanelRef}
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
@@ -286,7 +245,7 @@ const Home = () => {
           setConfirmRidePanel={setConfirmRidePanel}
           setVehicleType={setVehicleType}
         />
-      </div>
+      </div> */}
 
       {/* confirm ride panel */}
       <div
@@ -294,11 +253,9 @@ const Home = () => {
         className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
       >
         <ConfirmRide
-          pickup={pickup}
-          destination={destination}
+          route={route}
           setConfirmRidePanel={setConfirmRidePanel}
           setVehicleFound={setVehicleFound}
-          createRoute={createRoute}
         />
       </div>
 
@@ -314,12 +271,15 @@ const Home = () => {
       </div>
 
       {/*Waition for driver*/}
-      <div
+      {/* <div
         ref={waitingForDriverRef}
         className="fixed max-h-[50%] z-10 bottom-0 w-full px-3 py-8  bg-gray-900 overflow-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]"
       >
-        <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
-      </div>
+        <WaitingForDriver
+          setWaitingForDriver={setWaitingForDriver}
+          bookedRides={bookedRides}
+        />
+      </div> */}
     </div>
   );
 };

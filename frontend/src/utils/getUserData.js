@@ -110,17 +110,19 @@ export const getRouteById = async (routeId) => {
   return response.data;
 };
 
-export const getRouteData = async () => {
+export const getbookedRides = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
-    return null;
+    return null; 
   }
-  const clearToken = token.replace(/"/g, "");
-  console.log("Token:", clearToken);
-  const response = await axios.get("http://localhost:3000/api/route/getAll", {
+
+  const cleanToken = token.replace(/"/g, "");
+  console.log("Token:", cleanToken);
+
+  const response = await axios.get("http://localhost:3000/api/route/bookedRides", {
     headers: {
-      Authorization: `Bearer ${clearToken}`,
+      Authorization: `Bearer ${cleanToken}`,
     },
   });
   console.log(response.data);

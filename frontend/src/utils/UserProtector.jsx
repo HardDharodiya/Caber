@@ -39,6 +39,8 @@ const UserProtector = ({ children }) => {
             navigate("/paypg");
           } else if (location.pathname == "/Home") {
             navigate("/captain-home");
+          } else if (location.pathname == "/booked-rides") {
+            navigate("/my-rides");
           }
           setIsLoading(false);
         } else if (!response.data.user.isCaptain) {
@@ -52,6 +54,10 @@ const UserProtector = ({ children }) => {
           } else if (location.pathname == "/paypg") {
             navigate("/user-paypg");
           } else if (location.pathname == "/captain-home") {
+            navigate("/home");
+          } else if (location.pathname == "/my-rides") {
+            navigate("/booked-rides");
+          } else if (location.pathname == "/create-ride") {
             navigate("/home");
           }
           setIsLoading(false);

@@ -1,7 +1,37 @@
 import React from "react";
 import car from "../assets/Car.webp";
+import axios from "axios";
 
 const ConfirmRide = (props) => {
+  const submitHandler = () => {
+    const token = localStorage.getItem("token");
+    const cleanToken = token.replace(/"/g, "");
+    console.log("Token:", cleanToken);
+
+    axios
+      .post(
+        "http://localhost:3000/api/route/addPassenger",
+        {
+          routeId: props.route._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cleanToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Ride booked Successfully");
+          props.setConfirmRidePanel(false);
+        } else if (res.status === 402) {
+          alert("Insufficient Balance");
+        } else if (res.status === 404) {
+          alert("Route not found");
+        }
+      });
+  };
+  console.log("route", props.route);
   return (
     <div>
       <div
@@ -27,9 +57,10 @@ const ConfirmRide = (props) => {
           <div className=" flex items-center gap-5">
             <i className="ri-map-pin-user-fill text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">Pickup Location</h3>
               <p className="text-sm mt-1 text-gray-600">
-                Kankariya Talab, Ahmedabad
+                {props.route?.origin.charAt(0).toUpperCase() +
+                  props.route?.origin.slice(1)}
               </p>
             </div>
           </div>
@@ -39,9 +70,10 @@ const ConfirmRide = (props) => {
           <div className="flex items-center gap-5">
             <i className="ri-map-pin-2-fill text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">Drop-off Location</h3>
               <p className="text-sm mt-1 text-gray-600">
-                Kankariya Talab, Ahmedabad
+                {props.route?.destination.charAt(0).toUpperCase() +
+                  props.route?.destination.slice(1)}
               </p>
             </div>
           </div>
@@ -51,17 +83,13 @@ const ConfirmRide = (props) => {
           <div className="flex items-center gap-5">
             <i className="ri-currency-line text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">₹193.20</h3>
+              <h3 className="text-lg font-medium">{"₹" + props.route?.cost}</h3>
               <p className="text-sm mt-1 text-gray-600">Payment</p>
             </div>
           </div>
         </div>
         <button
-          onClick={() => {
-            props.createRoute();
-            props.setVehicleFound(true);
-            props.setConfirmRidePanel(false);
-          }}
+          onClick={submitHandler}
           className="w-full bg-[#9A6AFF] font-semibold p-3 rounded-xl"
         >
           Confirm

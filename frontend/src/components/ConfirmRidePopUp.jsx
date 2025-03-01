@@ -9,10 +9,31 @@ const ConfirmRidePopUp = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     if (!otp) {
       alert("Please enter OTP before confirming the ride.");
       return;
+    }
+    const email = props.ride?.passengerEmail;
+    console.log(email);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/user/verifyOTP",
+        {
+          email,
+          otp,
+        }
+      );
+      if (response.status == 200) {
+        navigate(
+          `/captain-riding?origin=${props.ride?.origin}&destination=${props.ride?.destination}&cost=${props.ride?.cost}&distance=${props.ride?.distance}`
+        );
+      } else {
+        alert("server error");
+      }
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+      alert("server error");
     }
   };
 
@@ -105,11 +126,7 @@ const ConfirmRidePopUp = (props) => {
               <button
                 type="submit"
                 className="w-full bg-[#9A6AFF] font-semibold p-3 rounded-xl text-center"
-                onClick={() => {
-                  navigate(
-                    `/captain-riding?origin=${props.ride?.origin}&destination=${props.ride?.destination}&cost=${props.ride?.cost}&distance=${props.ride?.distance}`
-                  );
-                }}
+                onClick={submitHandler}
               >
                 Confirm
               </button>
