@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
 const routeSchema = mongoose.Schema({
-  userId: {
+  driverId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   vehicleId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -22,47 +26,25 @@ const routeSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  originCoords: [
-    {
-      type: Number,
-      required: true,
-    },
-    {
-      type: Number,
-      required: true,
-    },
-  ],
-  destinationCoords: [
-    {
-      type: Number,
-      required: true,
-    },
-    {
-      type: Number,
-      required: true,
-    },
-  ],
-  passengers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+  passenger: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   cost: {
     type: Number,
     required: true,
   },
   date: {
     type: String,
-    // required: true,
+    required: true,
   },
   time: {
     type: String,
-    // required: true,
+    required: true,
   },
   status: {
     type: String,
-    // required: true,
+    required: true,
   },
 });
 

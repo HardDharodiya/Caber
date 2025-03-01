@@ -18,38 +18,33 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
     const session = await mongoose.startSession();
     const body = req.body;
     const routeId = await Route.findOne({ _id: body.routeId });
-    console.log(routeId);
+    console.log("routeId", routeId);
     // console.log(vehicleId);
-    const maxPassengers = await Vehicle.findOne({
-      _id: routeId.vehicleId,
-    });
 
-    console.log(maxPassengers);
-    if (maxPassengers.vehicleCapacity <= routeId.passengers.length) {
-      return res.status(400).json({ message: "Vehicle is full" });
-    }
     if (!routeId) {
       return res.status(400).json({ message: "Route ID is required" });
     }
     if (!(await Route.exists({ _id: routeId }))) {
       return res.status(400).json({ message: "Route not found" });
     }
-    if (await Route.exists({ _id: routeId, passengers: req.userId })) {
+    if (await Route.exists({ _id: routeId, passenger: req.userId })) {
       return res.status(400).json({ message: "You are already a passenger" });
     }
 
     session.startTransaction();
-    const to = await Route.findOne({ _id: routeId })
+    let to = await Route.findOne({ _id: routeId })
       .select("driverId")
       .session(session);
-    const amount = await Route.findOne({ _id: routeId })
+    let amount = await Route.findOne({ _id: routeId })
       .select("cost")
       .session(session);
-
+    amount = amount.cost;
+    to = to.driverId;
     console.log("to:" + to);
     console.log("amount:" + amount);
     const from = await User.findById(req.userId).session(session);
     console.log("from" + from);
+    console.log("from.balance" + from.balance);
     if (!from || from.balance < amount) {
       await session.abortTransaction();
       return res.status(400).json({ message: "Insufficient balance" });
@@ -57,45 +52,25 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
 
     await User.updateOne(
       { _id: from },
-      { $inc: { balance: -amount.cost } },
+      { $inc: { balance: -amount } },
       { session }
     );
 
     await User.updateOne(
       { _id: to.driverId },
-      { $inc: { balance: +amount.cost } },
+      { $inc: { balance: +amount } },
       { session }
     );
 
     await session.commitTransaction();
     console.log("Transaction completed");
 
-    const updatedRoute = await Route.findByIdAndUpdate(
-      routeId,
-      { $addToSet: { passengers: req.userId } }, // Prevents duplicates
-      { new: true, upsert: true } // Returns updated document and creates if missing
-    );
-
-    res.status(200).json({ updatedRoute });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-
-routeRouter.post("/acceptRoute", authMiddleware, async (req, res) => {
-  try {
-    const routeId = req.body.routeId;
-    const route = await Route.findOne({ _id: routeId });
-    if (!route) {
-      return res.status(400).json({ message: "Route not found" });
-    }
-    const updatedRoute = await Route.findByIdAndUpdate(
-      routeId,
-      { status: "accepted" },
-      { new: true }
-    );
-    res.status(200).json({ msg: "Route accepted" });
+    const updatedRoute = await Route.findOne({ _id: routeId }).updateMany({
+      passenger: req.userId,
+      status: "accepted",
+    });
+    console.log("updatedRoute", updatedRoute);
+    res.status(200).json({ msg: "Ride booked successfully!" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });

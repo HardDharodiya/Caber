@@ -6,26 +6,28 @@ const { getLatLng, getCost, getDistanceAndTime } = require("./cost");
 const create = async (req, res) => {
   try {
     const body = req.body;
+    const isCaptain = await User.findOne({
+      _id: req.userId,
+      isCaptain: true,
+    });
+    console.log(isCaptain);
+
+    if (!isCaptain) {
+      return res.status(403).json({
+        message: "To create a route you need to be a captain",
+      });
+    }
+
     const vehicleId = await Vehicle.findOne({
       userId: req.userId,
     });
-    const vehicleType = req.body;
+    const vehicleType = vehicleId.vehicleType;
+    console.log("vehicleType: ", vehicleType);
 
     console.log(req.userId);
-    // const isCaptain = await User.findOne({
-    //   _id: req.userId,
-    //   isCaptain: true,
-    // });
-    // console.log(isCaptain);
-
-    // if (!isCaptain) {
-    //   return res.status(403).json({
-    //     message: "To create a route you need to be a captain",
-    //   });
-    // }
 
     const existingRoute = await Route.findOne({
-      userId: req.userId,
+      driverId: req.userId,
       origin: body.source,
       destination: body.destination,
       date: body.date,
@@ -38,11 +40,9 @@ const create = async (req, res) => {
       });
     }
     const { lat: originLat, lng: originLng } = await getLatLng(body.source);
-    console.log("origin: ", originLat, originLng);
     const { lat: destinationLat, lng: destinationLng } = await getLatLng(
       body.destination
     );
-    console.log("destination: ", destinationLat, destinationLng);
     const cost = await getCost({
       originLat,
       originLng,
@@ -59,23 +59,24 @@ const create = async (req, res) => {
     });
     const distance = distanceTime.distance.value / 1000;
     await Route.create({
-      userId: req.userId,
+      driverId: req.userId,
       origin: body.source,
       destination: body.destination,
-      originCoords: [originLat, originLng],
-      destinationCoords: [destinationLat, destinationLng],
       cost: cost,
+      vehicleId: vehicleId._id,
+      date: body.date,
+      time: body.time,
       status: body.status,
       distance: distance,
     });
     const routeId = await Route.findOne({
-      userId: req.userId,
+      driverId: req.userId,
       origin: body.source,
       destination: body.destination,
     }).select("_id");
 
     res.status(201).json({
-      routeId: routeId._id,
+      routeId: routeId,
       message: "Route created successfully",
     });
   } catch (err) {
@@ -113,17 +114,24 @@ const getAll = async (req, res) => {
 
 const bulk = async (req, res) => {
   try {
-    const filter = req.query.filter || "";
+    const origin = req.query.origin || "";
+    const destination = req.query.destination || "";
+
     const routes = await Route.find({
-      $or: [
+      $and: [
         {
           origin: {
-            $regex: filter,
+            $regex: origin,
           },
         },
         {
           destination: {
-            $regex: filter,
+            $regex: destination,
+          },
+        },
+        {
+          status: {
+            $regex: "pending",
           },
         },
       ],
