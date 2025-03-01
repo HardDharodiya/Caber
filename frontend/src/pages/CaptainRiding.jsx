@@ -10,12 +10,10 @@ const CaptainRiding = () => {
   const finishRidePanelRef = useRef(null);
   const mapRef = useRef(null);
   const [searchParams] = useSearchParams();
+  const distance = searchParams.get("distance");
   const origin = searchParams.get("origin");
   const destination = searchParams.get("destination");
   const cost = searchParams.get("cost");
-
-  
-  console.log(origin, destination, cost);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -57,7 +55,9 @@ const CaptainRiding = () => {
 
         <div className="flex items-center justify-between  relative">
           <div className=" p-3 items-center justify-center flexflex-col text-lg text-white rounded-xl">
-            <h4 className="text-green-600 font-semibold text-xl">4.0 KM</h4>
+            <h4 className="text-green-600 font-semibold text-xl">
+              {distance + "KM"}
+            </h4>
             <h5>away</h5>
           </div>
           <button

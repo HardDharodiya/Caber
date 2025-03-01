@@ -19,6 +19,7 @@ import UserPayPg from "./pages/UserPayPg";
 import UserAboutPage from "./pages/UserAboutPage";
 import UserProtector from "./utils/userProtector";
 import CaptainRideCreate from "./pages/CaptainRideCreate";
+import Rides from "./pages/Rides";
 
 const app = () => {
   return (
@@ -56,10 +57,18 @@ const app = () => {
         }
       />
       <Route
-        path="/captain-ride-create"
+        path="/create-ride"
         element={
           <UserProtector>
             <CaptainRideCreate />
+          </UserProtector>
+        }
+      />
+      <Route
+        path="/my-rides"
+        element={
+          <UserProtector>
+            <Rides />
           </UserProtector>
         }
       />

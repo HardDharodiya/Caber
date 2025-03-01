@@ -4,32 +4,41 @@ import logo from "../assets/20241220_120541.png";
 import axios from "axios";
 
 const CaptainRideCreate = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [userData, setUserDate] = useState({});
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const navigate = useNavigate();
 
-  const submitHandller = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    setUserDate({
-      username: {
-        firstName: firstName,
-        lastName: lastName,
-      },
-      email: email,
-      password: password,
-    });
-    setEmail("");
-    setFirstName("");
-    setLastName("");
-    setPassword("");
+    const token = localStorage.getItem("token");
+    console.log("token: ", token);
+
+    const cleanToken = token.replace(/"/g, "");
+    console.log("cleanToken: ", cleanToken);
+    axios
+      .post(
+        "http://localhost:3000/api/route/create",
+        {
+          source: from,
+          destination: to,
+          date: date,
+          time: time,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cleanToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          alert("Ride Created Successfully");
+          navigate("/captain-home");
+        }
+      });
   };
-  // to console log userDat
-  // useEffect(()=>{
-  //   console.log(userData)
-  // },[userData])
 
   return (
     <div className="bg-[#1E2029] h-screen w-full flex flex-col justify-between">
@@ -39,7 +48,7 @@ const CaptainRideCreate = () => {
         <form
           className="ml-5 mr-5 mb-5 mt-1"
           onSubmit={(e) => {
-            submitHandller(e);
+            submitHandler(e);
           }}
         >
           <h3 className="text-base mb-2 text-[#ffffff] font-medium">
@@ -52,9 +61,8 @@ const CaptainRideCreate = () => {
               type="text"
               placeholder="From"
               className="bg-[#ffffff] rounded px-4 py-2 border w-1/2 text-base placeholder:text-sm"
-              value={firstName}
               onChange={(e) => {
-                setFirstName(e.target.value);
+                setFrom(e.target.value);
               }}
             />
 
@@ -63,75 +71,43 @@ const CaptainRideCreate = () => {
               type="text"
               placeholder="To"
               className="bg-[#ffffff]  rounded px-4 py-2 border w-1/2 text-base placeholder:text-sm"
-              value={lastName}
               onChange={(e) => {
-                setLastName(e.target.value);
+                setTo(e.target.value);
               }}
             />
           </div>
 
-          <h3 className="text-base mb-2 text-[#ffffff] font-medium">
-            Date
-          </h3>
+          <h3 className="text-base mb-2 text-[#ffffff] font-medium">Date</h3>
 
           <input
             required
             type="date"
             className="bg-[#ffffff] mb-5 rounded px-4 py-2 border w-full text-base placeholder:text-sm"
-            value={email}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setDate(e.target.value);
             }}
           />
 
-          <h3 className="text-base font-medium mb-2 text-[#ffffff]">
-            Time
-          </h3>
+          <h3 className="text-base font-medium mb-2 text-[#ffffff]">Time</h3>
 
           <input
             required
             type="time"
             className="bg-[#ffffff] mb-5 rounded px-4 py-2 border w-full text-base placeholder:text-sm"
-            value={password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setTime(e.target.value);
             }}
           />
         </form>
-
-       
       </div>
 
       <div className="p-5 mb-2">
-      <button
-            className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
-            onClick={async () => {
-              try {
-                const response = await axios.post(
-                  "http://localhost:3000/api/user/auth/signup",
-                  {
-                    email,
-                    firstName,
-                    lastName,
-                    password,
-                    isCaptain: false,
-                  }
-                );
-                console.log(response.data.token);
-                localStorage.removeItem("token");
-                localStorage.setItem("token", response.data.token);
-                navigate("/captain-home");
-              } catch (error) {
-                if (error.response && error.response.status === 400) {
-                  alert("Invalid input");
-                } else {
-                  alert("Something want wrong. Please try again.");
-                }
-              }
-            }}
-          >
-            Create
-          </button>
+        <button
+          className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+          onClick={submitHandler}
+        >
+          Create
+        </button>
       </div>
     </div>
   );

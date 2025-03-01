@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserData, getVehicleData } from "../utils/getUserData";
 import { CaptainDataContext } from "../context/CaptainContext";
+import Spinner from "../components/Spinner";
 
 const CaptainAboutPage = () => {
   const navigate = useNavigate();
@@ -120,7 +121,9 @@ const CaptainAboutPage = () => {
             </div>
           </div>
         ) : (
-          <p className="text-center mt-4">Loading...</p>
+          <div className="flex justify-center items-center h-[80vh]">
+            <Spinner />
+          </div>
         )}
       </div>
     </div>

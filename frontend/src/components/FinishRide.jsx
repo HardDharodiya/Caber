@@ -31,7 +31,7 @@ const FinishRide = (props) => {
           <div className=" flex items-center gap-5">
             <i className="ri-map-pin-user-fill text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">Pickup Location</h3>
               <p className="text-sm mt-1 text-gray-600">
                 {props.origin.charAt(0).toUpperCase() + props.origin.slice(1)}
               </p>
@@ -43,7 +43,7 @@ const FinishRide = (props) => {
           <div className="flex items-center gap-5">
             <i className="ri-map-pin-2-fill text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">Drop-off Location</h3>
               <p className="text-sm mt-1 text-gray-600">
                 {props.destination.charAt(0).toUpperCase() +
                   props.destination.slice(1)}

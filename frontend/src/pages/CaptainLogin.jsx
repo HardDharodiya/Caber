@@ -82,7 +82,7 @@ const CaptainLogin = () => {
                 navigate("/captain-home");
               } catch (error) {
                 if (error.response && error.response.status === 400) {
-                  alert("Invalid input");
+                  alert("Invalid email or password");
                 } else {
                   alert("Something want wrong. Please try again.");
                 }

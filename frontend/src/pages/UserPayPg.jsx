@@ -46,7 +46,7 @@ const UserPayPg = () => {
         </div>
 
         <div className="flex justify-center mt-6 mx-auto">
-          <div className="border rounded-lg w-full p-4 mb-11 bg-white">
+          {/* <div className="border rounded-lg w-full p-4 mb-11 bg-white">
             <div className="text-left text-lg font-semibold text-gray-800 mb-2">
               Transaction History
             </div>
@@ -76,7 +76,7 @@ const UserPayPg = () => {
                 dummy Data
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <button

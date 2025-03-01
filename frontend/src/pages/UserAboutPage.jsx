@@ -53,7 +53,9 @@ const UserAboutPage = () => {
             </div>
           </div>
         ) : (
-          <p className="text-center mt-4">Loading...</p>
+          <div className="flex justify-center items-center h-[80vh]">
+            <Spinner />
+          </div>
         )}
       </div>
     </div>

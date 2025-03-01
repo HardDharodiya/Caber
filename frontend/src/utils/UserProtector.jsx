@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Spinner from "../components/Spinner";
 
 const UserProtector = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -67,7 +68,11 @@ const UserProtector = ({ children }) => {
   }, [token, navigate]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner />
+      </div>
+    );
   }
 
   return <>{children}</>;

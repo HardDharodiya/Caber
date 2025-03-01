@@ -48,8 +48,8 @@ const PayPg = () => {
         </div>
 
         <div className="flex justify-center mt-6 mx-auto">
-          <div className="border rounded-lg w-full p-4 mb-11 bg-white">
-            <div className="text-left text-lg font-semibold text-gray-800 mb-2">
+          {/* <div className="border rounded-lg w-full p-4 mb-11 bg-white"> */}
+            {/* <div className="text-left text-lg font-semibold text-gray-800 mb-2">
               Transaction History
             </div>
 
@@ -77,8 +77,8 @@ const PayPg = () => {
               <div className="text-center items-center border-y-2 justify-center p-2 text-black">
                 dummy Data
               </div>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </div>
 
         <button

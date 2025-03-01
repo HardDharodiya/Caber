@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import User from "../assets/dummy-user.jpg";
 import { CaptainDataContext } from "../context/CaptainContext";
+import { useNavigate } from "react-router-dom";
 
 const CaptainDetails = () => {
   const { captainData } = useContext(CaptainDataContext);
   console.log("captainData", captainData);
+
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col justify-between gap-2">
       <div className="flex justify-between items-center ">
@@ -30,12 +33,22 @@ const CaptainDetails = () => {
         </div>
       </div>
 
-      <div className="flex w-full justify-around p-4 rounded-2xl mt-1">
+      <div className="flex justify-center w-full p-4 rounded-2xl mt-1">
         <button
-          type="submit"
-          className="mt-1 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+          className="my-1 mx-3  flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+          onClick={() => {
+            navigate("/create-ride");
+          }}
         >
           Create Ride
+        </button>
+        <button
+          className="my-1 mx-3 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
+          onClick={() => {
+            navigate("/my-rides");
+          }}
+        >
+          My Rides
         </button>
       </div>
     </div>

@@ -14,39 +14,6 @@ const ConfirmRidePopUp = (props) => {
       alert("Please enter OTP before confirming the ride.");
       return;
     }
-
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found!");
-      alert("Authentication error. Please log in again.");
-      return;
-    }
-
-    const cleanToken = token.replace(/"/g, ""); // Removing unwanted quotes
-    console.log("cleanToken:", cleanToken);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/route/acceptRoute",
-        {
-          routeId: props.currentRide?._id, // Using optional chaining to prevent errors
-          otp: otp, // Sending OTP
-        },
-        {
-          headers: { Authorization: `Bearer ${cleanToken}` },
-        }
-      );
-
-      console.log("Ride accepted successfully:", response.data);
-      alert("Ride confirmed!");
-
-      // You can close the popups after successful confirmation
-      props.setConfirmRidePopUpPanel(false);
-      props.setRidePopUpPanel(false);
-    } catch (error) {
-      console.error("Error confirming ride:", error);
-      alert("Failed to confirm the ride. Please try again.");
-    }
   };
 
   return (
@@ -76,19 +43,17 @@ const ConfirmRidePopUp = (props) => {
             className="h-10 w-10 rounded-full object-cover"
           />
           <h4 className="text-lg font-medium text-white">
-            {props.currentUser?.firstName.charAt(0).toUpperCase() +
-              props.currentUser?.firstName.slice(1) +
-              " " +
-              props.currentUser?.lastName || "N/A"}
+            {props.ride?.passengerName.charAt(0).toUpperCase() +
+              props.ride?.passengerName.slice(1) || "N/A"}
           </h4>
         </div>
 
         <div>
           <h3 className="text-xl font-medium text-green-500">
-            {"₹" + (props.currentRide?.cost || "N/A")}
+            {"₹" + (props.ride?.cost || "N/A")}
           </h3>
           <p className="text-lg mt-1 text-gray-200">
-            {props.currentRide?.distance + "KM" || "N/A"}
+            {props.ride?.distance + "KM" || "N/A"}
           </p>
         </div>
       </div>
@@ -100,9 +65,9 @@ const ConfirmRidePopUp = (props) => {
             <div>
               <h3 className="text-lg font-medium">Pickup Location</h3>
               <p className="text-sm mt-1 text-gray-600">
-                {props.currentRide?.origin
-                  ? props.currentRide.origin.charAt(0).toUpperCase() +
-                    props.currentRide.origin.slice(1)
+                {props.ride?.origin
+                  ? props.ride.origin.charAt(0).toUpperCase() +
+                    props.ride.origin.slice(1)
                   : "N/A"}
               </p>
             </div>
@@ -115,9 +80,9 @@ const ConfirmRidePopUp = (props) => {
             <div>
               <h3 className="text-lg font-medium">Drop-off Location</h3>
               <p className="text-sm mt-1 text-gray-600">
-                {props.currentRide?.destination
-                  ? props.currentRide.destination.charAt(0).toUpperCase() +
-                    props.currentRide.destination.slice(1)
+                {props.ride?.destination
+                  ? props.ride.destination.charAt(0).toUpperCase() +
+                    props.ride.destination.slice(1)
                   : "N/A"}
               </p>
             </div>
@@ -142,7 +107,7 @@ const ConfirmRidePopUp = (props) => {
                 className="w-full bg-[#9A6AFF] font-semibold p-3 rounded-xl text-center"
                 onClick={() => {
                   navigate(
-                    `/captain-riding?origin=${props.currentRide?.origin}&destination=${props.currentRide?.destination}&cost=${props.currentRide?.cost}`
+                    `/captain-riding?origin=${props.ride?.origin}&destination=${props.ride?.destination}&cost=${props.ride?.cost}&distance=${props.ride?.distance}`
                   );
                 }}
               >
