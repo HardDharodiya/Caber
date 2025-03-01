@@ -25,7 +25,7 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
       return res.status(400).json({ message: "Route ID is required" });
     }
     if (!(await Route.exists({ _id: routeId }))) {
-      return res.status(400).json({ message: "Route not found" });
+      return res.status(404).json({ message: "Route not found" });
     }
     if (await Route.exists({ _id: routeId, passenger: req.userId })) {
       return res.status(400).json({ message: "You are already a passenger" });
@@ -47,7 +47,7 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
     console.log("from.balance" + from.balance);
     if (!from || from.balance < amount) {
       await session.abortTransaction();
-      return res.status(400).json({ message: "Insufficient balance" });
+      return res.status(402).json({ message: "Insufficient balance" });
     }
 
     await User.updateOne(
@@ -71,6 +71,36 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
     });
     console.log("updatedRoute", updatedRoute);
     res.status(200).json({ msg: "Ride booked successfully!" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+routeRouter.get("/bookedRides", authMiddleware, async (req, res) => {
+  try {
+    const routes = await Route.find({ passenger: req.userId });
+    const ridesWithDriverNames = await Promise.all(
+      routes.map(async (route) => {
+        if (route.passenger) {
+          const user = await User.findById(route.driverId).select(
+            "firstName lastName email"
+          );
+          const vehicle = await Vehicle.findById(route.vehicleId).select(
+            "vehicleNumber"
+          );
+          console.log("user", user);
+          return {
+            ...route.toObject(),
+            driverName: user ? `${user.firstName} ${user.lastName} ` : "N/A",
+            driverEmail: user ? user.email : "N/A",
+            vehicleNumber: vehicle ? vehicle.vehicleNumber : "N/A",
+          };
+        }
+        return { ...route.toObject(), passengerName: "N/A" };
+      })
+    );
+    return res.status(200).json({ routes: ridesWithDriverNames });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
