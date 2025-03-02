@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserData, getVehicleData } from "../utils/getUserData";
+import { getVehicleData } from "../utils/getUserData";
 import { CaptainDataContext } from "../context/CaptainContext";
 import Spinner from "../components/Spinner";
 

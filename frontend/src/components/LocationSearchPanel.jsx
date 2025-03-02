@@ -42,17 +42,23 @@ const LocationSearchPanel = (props) => {
               props.setConfirmRidePanel(true);
               props.setPanelOpen(false);
             }}
-            className="flex border-4 border-gray-100 active:border-[#9A6AFF] items-center justify-start bg-gray-100 rounded-2xl p-2 gap-3"
+            className="border-4 border-gray-100 active:border-[#9A6AFF] bg-gray-100 rounded-2xl p-2 gap-3"
           >
-            <h2 className="bg-gray-300 h-10 w-16 flex justify-center items-center rounded-full">
-              <i className="ri-map-pin-2-line"></i>
-            </h2>
-            <h4 className="font-medium">{`${
-              route.origin.charAt(0).toUpperCase() + route.origin.slice(1)
-            } to ${
-              route.destination.charAt(0).toUpperCase() +
-              route.destination.slice(1)
-            }`}</h4>
+            <div className=" flex justify-center items-center">
+              <h4 className="font-medium w-[70%]">{`${
+                route.origin.charAt(0).toUpperCase() + route.origin.slice(1)
+              } to ${
+                route.destination.charAt(0).toUpperCase() +
+                route.destination.slice(1)
+              }`}</h4>
+              <h4 className="font-semibold">₹ {route.cost || "N/A"}</h4>
+            </div>
+            <div className="flex justify-center items-center">
+              <h4 className="font-medium w-[35%]">Date & Time: </h4>
+              <h4 className="font-semibold">
+                {new Date(route.dateTime).toLocaleString()}
+              </h4>
+            </div>
           </div>
         ))
       )}

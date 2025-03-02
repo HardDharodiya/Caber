@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import map from "../assets/map.png";
 import CaptainDetails from "../components/CaptainDetails";
-// import { Link } from "react-router-dom";
 import logo from "../assets/20241220_120512.png";
 import RidePopUp from "../components/RidePopUp";
 import { useGSAP } from "@gsap/react";

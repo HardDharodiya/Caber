@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/20241220_120541.png";
 import axios from "axios";
+import Spinner from "../components/Spinner";
 
 const CaptainRideCreate = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setLoading(true);
     const token = localStorage.getItem("token");
     console.log("token: ", token);
 
@@ -37,11 +40,19 @@ const CaptainRideCreate = () => {
           alert("Ride Created Successfully");
           navigate("/captain-home");
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   return (
     <div className="bg-[#1E2029] h-screen w-full flex flex-col justify-between">
+      {loading && (
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <Spinner />
+        </div>
+      )}
       <div>
         <img src={logo} alt="" className="w-20 ml-3" />
 
