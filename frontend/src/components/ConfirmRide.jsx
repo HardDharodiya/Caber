@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import car from "../assets/Car.webp";
 import axios from "axios";
+import Spinner from "./Spinner";
 
 const ConfirmRide = (props) => {
+  const [loading, setLoading] = useState(false);
   const submitHandler = () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     const cleanToken = token.replace(/"/g, "");
     console.log("Token:", cleanToken);
@@ -29,11 +32,19 @@ const ConfirmRide = (props) => {
         } else if (res.status === 404) {
           alert("Route not found");
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   console.log("route", props.route);
   return (
     <div>
+      {loading && (
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <Spinner />
+        </div>
+      )}
       <div
         className="opacity-1"
         onClick={() => {

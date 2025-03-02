@@ -88,6 +88,12 @@ const create = async (req, res) => {
 
 const get = async (req, res) => {
   try {
+    const response = await removeRoute(req, res);
+    if (response) {
+      console.log("route cant be deleted due to some problem");
+    } else {
+      console.log("route is deleted");
+    }
     const routes = await Route.find({
       driverId: req.userId,
     });
@@ -173,4 +179,28 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { create, get, getAll, bulk, getById };
+const removeRoute = async (req, res) => {
+  const finishedRoute = await Route.find({
+    driverId: req.userId,
+    status: "Finished",
+  });
+  console.log("finished:", finishedRoute);
+
+  const updated = await Route.findOneAndDelete({
+    $or: [
+      { driverId: req.userId }, // Direct ObjectId match
+      { passenger: req.userId },
+    ],
+    status: "Finished",
+  });
+
+  if (updated) {
+    console.log("Deleted:", updated);
+    return 0;
+  } else {
+    console.log("No matching route found to delete.");
+    return 1;
+  }
+};
+
+module.exports = { create, get, getAll, bulk, getById, removeRoute };

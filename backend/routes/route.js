@@ -4,7 +4,14 @@ const { authMiddleware } = require("../middlewares");
 const Route = require("../models/route");
 const User = require("../models/user");
 const { default: mongoose } = require("mongoose");
-const { get, create, getAll, getById, bulk } = require("../controls/route");
+const {
+  get,
+  create,
+  getAll,
+  getById,
+  bulk,
+  removeRoute,
+} = require("../controls/route");
 const Vehicle = require("../models/vehicle");
 
 routeRouter.post("/create", authMiddleware, create);
@@ -57,7 +64,7 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
     );
 
     await User.updateOne(
-      { _id: to.driverId },
+      { _id: to },
       { $inc: { balance: +amount } },
       { session }
     );
@@ -79,6 +86,12 @@ routeRouter.post("/addPassenger", authMiddleware, async (req, res) => {
 
 routeRouter.get("/bookedRides", authMiddleware, async (req, res) => {
   try {
+    const response = await removeRoute(req, res);
+    if (response) {
+      console.log("booked route cant be deleted due to some problem");
+    } else {
+      console.log("booked route is deleted");
+    }
     const routes = await Route.find({ passenger: req.userId });
     const ridesWithDriverNames = await Promise.all(
       routes.map(async (route) => {
@@ -97,13 +110,41 @@ routeRouter.get("/bookedRides", authMiddleware, async (req, res) => {
             vehicleNumber: vehicle ? vehicle.vehicleNumber : "N/A",
           };
         }
-        return { ...route.toObject(), passengerName: "N/A" };
+        return {
+          ...route.toObject(),
+          driverName,
+          driverEmail,
+          vehicleNumber: "N/A",
+        };
       })
     );
     return res.status(200).json({ routes: ridesWithDriverNames });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+routeRouter.post("/finishRoute", authMiddleware, async (req, res) => {
+  try {
+    const routeId = req.body.routeId;
+    console.log("routeId", routeId);
+    const route = await Route.findOneAndUpdate(
+      {
+        _id: routeId,
+      },
+      {
+        status: "Finished",
+      }
+    );
+    if (route) {
+      return res.status(200).json({ message: "Ride finished successfully!" });
+    } else {
+      res.status(404).json({ message: "route not found" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

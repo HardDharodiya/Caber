@@ -47,7 +47,7 @@ const BookedRides = () => {
     <>
       <div className="bg-[#1E2029] min-h-screen w-full flex flex-col">
         <div className="flex p-4">
-          <div onClick={() => navigate("/captain-home")}>
+          <div onClick={() => navigate("/home")}>
             <i className="ri-arrow-left-line text-white text-2xl"></i>
           </div>
         </div>
@@ -109,7 +109,7 @@ const Ride = ({ ride, setWaitingForDriver, setSelectedRide }) => {
       <div className="flex justify-between items-center border-b py-2">
         <span className="text-gray-600">Date:</span>
         <span className="text-black">
-          {new Date(ride.dateTime).toLocaleString()}
+          {new Date(ride.dateTime).toUTCString()}
         </span>
       </div>
 

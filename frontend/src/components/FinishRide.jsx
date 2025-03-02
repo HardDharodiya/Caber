@@ -1,8 +1,34 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import User from "../assets/dummy-user.jpg";
+import axios from "axios";
 
 const FinishRide = (props) => {
+  const navigate = useNavigate();
+  const submitHandler = () => {
+    const token = localStorage.getItem("token");
+    const cleanToken = token.replace(/"/g, "");
+    axios
+      .post(
+        "http://localhost:3000/api/route/finishRoute",
+        { routeId: props.routeId },
+        {
+          headers: {
+            Authorization: `Bearer ${cleanToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        console.log(res.status);
+        if (res.status == 200) {
+          alert("Ride finished");
+          navigate("/captain-home");
+        } else {
+          alert("Internal Server error. Please try again!");
+        }
+      });
+  };
   return (
     <div className=" w-full">
       <h3 className="text-2xl font-semibold text-yellow-50 mb-5">
@@ -52,12 +78,12 @@ const FinishRide = (props) => {
           </div>
         </div>
 
-        <Link
-          to="/captain-home"
+        <button
+          onClick={submitHandler}
           className="w-full bg-[#9A6AFF] font-semibold p-3 rounded-xl text-center"
         >
           Finish Ride
-        </Link>
+        </button>
       </div>
     </div>
   );

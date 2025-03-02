@@ -54,9 +54,9 @@ const LocationSearchPanel = (props) => {
               <h4 className="font-semibold">₹ {route.cost || "N/A"}</h4>
             </div>
             <div className="flex justify-center items-center">
-              <h4 className="font-medium w-[35%]">Date & Time: </h4>
+              <h4 className="font-medium w-[32%]">Date & Time: </h4>
               <h4 className="font-semibold">
-                {new Date(route.dateTime).toLocaleString()}
+                {new Date(route.dateTime).toUTCString().slice(0, 25)}
               </h4>
             </div>
           </div>

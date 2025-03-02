@@ -25,7 +25,7 @@ const ConfirmRidePopUp = (props) => {
       );
       if (response.status == 200) {
         navigate(
-          `/captain-riding?origin=${props.ride?.origin}&destination=${props.ride?.destination}&cost=${props.ride?.cost}&distance=${props.ride?.distance}`
+          `/captain-riding?origin=${props.ride?.origin}&destination=${props.ride?.destination}&cost=${props.ride?.cost}&distance=${props.ride?.distance}&routeId=${props.ride?._id}`
         );
       } else {
         alert("server error");

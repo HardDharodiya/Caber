@@ -14,6 +14,7 @@ const CaptainRiding = () => {
   const origin = searchParams.get("origin");
   const destination = searchParams.get("destination");
   const cost = searchParams.get("cost");
+  const routeId = searchParams.get("routeId");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -80,6 +81,7 @@ const CaptainRiding = () => {
           origin={origin}
           destination={destination}
           cost={cost}
+          routeId={routeId}
         />
       </div>
     </div>

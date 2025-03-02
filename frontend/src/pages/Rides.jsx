@@ -114,7 +114,7 @@ const Ride = ({ ride, setConfirmRidePopUpPanel, setSelectedRide }) => {
       <div className="flex justify-between items-center border-b py-2">
         <span className="text-gray-600">Date:</span>
         <span className="text-black">
-          {new Date(ride.dateTime).toLocaleString()}
+          {new Date(ride.dateTime).toUTCString()}
         </span>
       </div>
 
