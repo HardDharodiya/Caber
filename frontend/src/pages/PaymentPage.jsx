@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UpiLogo from "../assets/upiLogo.png";
 import CardLogo from "../assets/cardLogo.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PaymentForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -10,6 +11,8 @@ const PaymentForm = () => {
   const [cardName, setCardName] = useState("");
   const [cardExDate, setCardExDate] = useState("");
   const [cvv, setCvv] = useState("");
+
+  const navigate = useNavigate();
 
   const handleRadioChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -52,15 +55,21 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="h-screen items-center">
+    <div className="h-screen items-center ">
+
       <form
         id="radioForm"
         onSubmit={handleSubmit}
         className="bg-[#1E2029] p-6 h-full items-center"
       >
+        <div onClick={() => navigate("/user-paypg")} className="">
+          <i class="ri-arrow-left-line text-white text-2xl"></i>
+        </div>
+
         <div className="text-center text-xl font-semibold text-white mb-10 mt-4">
           Payment Methods
         </div>
+
 
         <div className="flex justify-center items-center gap-3 rounded-md mb-6 cursor-pointer hover:bg-[#444851]">
           <input

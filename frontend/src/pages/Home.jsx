@@ -139,7 +139,7 @@ const Home = () => {
   return (
     <div className="h-screen relative overflow-hidden">
       <div className="pt-10 h-[5vh]">
-        <img src={logo} alt="" className="w-20 absolute left-5 top-0 pt-3" />
+        <img src={logo} alt="" className="w-20 absolute left-5 top-3 pt-3" />
         <button
           onClick={() => navigate("/user-about")}
           className="fixed  h-10 w-10 bg-gray-900 flex items-center justify-center rounded-full right-4 top-4"
@@ -193,7 +193,7 @@ const Home = () => {
           </div>
 
           <form>
-            <div className="line absolute h-14 w-1 top-[45%]  rounded-lg left-10 bg-[#9A6AFF]"></div>
+            <div className="line absolute h-14 w-1 top-[55%]  rounded-lg left-10 bg-[#9A6AFF]"></div>
 
             <input
               onClick={() => {

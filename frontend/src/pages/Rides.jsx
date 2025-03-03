@@ -59,16 +59,18 @@ const Rides = () => {
             <Spinner />
           </div>
         ) : (
-          <div className="flex flex-col gap-4 p-4">
-            {rides.map((ride, index) => (
-              <Ride
-                ride={ride}
-                key={ride._id || index}
-                setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
-                setSelectedRide={setSelectedRide}
-              />
-            ))}
-          </div>
+         
+            <div className="flex flex-col gap-4 p-4 overflow-auto max-h-[70%] mb-2 scrollbar-hide ">
+              {rides.map((ride, index) => (
+                <Ride
+                  ride={ride}
+                  key={ride._id || index}
+                  setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
+                  setSelectedRide={setSelectedRide}
+                />
+              ))}
+            </div>
+          
         )}
       </div>
       <div
@@ -102,9 +104,8 @@ const Ride = ({ ride, setConfirmRidePopUpPanel, setSelectedRide }) => {
     >
       {/* Ride Route & Cost */}
       <div className="flex justify-between items-center border-b pb-2">
-        <h2 className="text-lg capitalize">{`${ride.origin || "N/A"} to ${
-          ride.destination || "N/A"
-        }`}</h2>
+        <h2 className="text-lg capitalize">{`${ride.origin || "N/A"} to ${ride.destination || "N/A"
+          }`}</h2>
         <span className="text-xl font-bold text-green-600">
           ₹ {ride.cost || "N/A"}
         </span>
