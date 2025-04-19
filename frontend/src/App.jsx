@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import UserLogin from "./pages/UserLogin";
-import UserSignup from "./pages/userSignup";
+import UserSignup from "./pages/UserSignup";
 import CaptainLogin from "./pages/CaptainLogin";
 import CaptainSignup from "./pages/CaptainSignup";
 import Start from "./pages/Start";
@@ -17,10 +17,10 @@ import CaptainAboutPage from "./pages/CaptainAboutPage";
 import UserAbout from "./pages/UserAbout";
 import UserPayPg from "./pages/UserPayPg";
 import UserAboutPage from "./pages/UserAboutPage";
-import UserProtector from "./utils/userProtector";
+import UserProtector from "./utils/UserProtector";
 import CaptainRideCreate from "./pages/CaptainRideCreate";
 import Rides from "./pages/Rides";
-import BookedRides from "./pages/bookedRides";
+import BookedRides from "./pages/BookedRides";
 
 const app = () => {
   return (
