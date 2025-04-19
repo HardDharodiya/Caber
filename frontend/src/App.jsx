@@ -17,10 +17,10 @@ import CaptainAboutPage from "./pages/CaptainAboutPage";
 import UserAbout from "./pages/UserAbout";
 import UserPayPg from "./pages/UserPayPg";
 import UserAboutPage from "./pages/UserAboutPage";
-import UserProtector from "./utils/userProtector";
+import UserProtector from "./utils/UserProtector";
 import CaptainRideCreate from "./pages/CaptainRideCreate";
 import Rides from "./pages/Rides";
-import BookedRides from "./pages/bookedRides";
+import BookedRides from "./pages/BookedRides";
 
 const app = () => {
   return (
