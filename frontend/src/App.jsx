@@ -21,9 +21,11 @@ import UserProtector from "./utils/UserProtector";
 import CaptainRideCreate from "./pages/CaptainRideCreate";
 import Rides from "./pages/Rides";
 import BookedRides from "./pages/BookedRides";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const app = () => {
   return (
+    <>
     <Routes>
       <Route path="/" element={<Start />} />
       <Route path="/login" element={<UserLogin />} />
@@ -130,6 +132,8 @@ const app = () => {
         }
       />
     </Routes>
+    <SpeedInsights />
+    </>
   );
 };
 
