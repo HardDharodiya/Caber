@@ -180,7 +180,7 @@ const captainSignup = () => {
             onClick={async () => {
               try {
                 const response = await axios.post(
-                  "http://localhost:3000/api/user/auth/signup",
+                  "https://caber-77w9.onrender.com/api/user/auth/signup",
                   {
                     email,
                     password,

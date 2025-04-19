@@ -22,7 +22,7 @@ const CaptainRideCreate = () => {
     console.log("cleanToken: ", cleanToken);
     axios
       .post(
-        "http://localhost:3000/api/route/create",
+        "https://caber-77w9.onrender.com/api/route/create",
         {
           source: from,
           destination: to,

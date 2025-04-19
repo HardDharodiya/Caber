@@ -26,10 +26,7 @@ const UserSignup = () => {
     setLastName("");
     setPassword("");
   };
-  // to console log userDat
-  // useEffect(()=>{
-  //   console.log(userData)
-  // },[userData])
+
 
   return (
     <div className="bg-[#1E2029] h-screen w-full flex flex-col justify-between">
@@ -105,7 +102,7 @@ const UserSignup = () => {
             onClick={async () => {
               try {
                 const response = await axios.post(
-                  "http://localhost:3000/api/user/auth/signup",
+                  "https://caber-77w9.onrender.com/api/user/auth/signup",
                   {
                     email,
                     firstName,

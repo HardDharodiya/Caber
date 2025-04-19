@@ -10,7 +10,7 @@ export const getUserData = async () => {
   const cleanToken = token.replace(/"/g, "");
   console.log("Token:", cleanToken);
 
-  const response = await axios.get("http://localhost:3000/api/user/getUser", {
+  const response = await axios.get("https://caber-77w9.onrender.com/api/user/getUser", {
     headers: {
       Authorization: `Bearer ${cleanToken}`,
     },
@@ -30,7 +30,7 @@ export const getUserById = async (userId) => {
   console.log("Token in getbyid:", cleanToken);
 
   const response = await axios.get(
-    "http://localhost:3000/api/user/getById",
+    "https://caber-77w9.onrender.com/api/user/getById",
     {
       headers: {
         Authorization: `Bearer ${cleanToken}`,
@@ -53,7 +53,7 @@ export const getVehicleData = async () => {
   console.log("Token:", cleanToken);
 
   const response = await axios.get(
-    "http://localhost:3000/api/user/getVehicle",
+    "https://caber-77w9.onrender.com/api/user/getVehicle",
     {
       headers: {
         Authorization: `Bearer ${cleanToken}`,
@@ -75,7 +75,7 @@ export const getVehicleById = async (vehicleId) => {
   console.log("Token:", cleanToken);
 
   const response = await axios.get(
-    "http://localhost:3000/api/user/getVehicleById",
+    "https://caber-77w9.onrender.com/api/user/getVehicleById",
     {
       headers: {
         Authorization: `Bearer ${cleanToken}`,
@@ -98,7 +98,7 @@ export const getRouteById = async (routeId) => {
   console.log("Token:", cleanToken);
 
   const response = await axios.get(
-    "http://localhost:3000/api/route/getById",
+    "https://caber-77w9.onrender.com/api/route/getById",
     {
       headers: {
         Authorization: `Bearer ${cleanToken}`,
@@ -120,7 +120,7 @@ export const getbookedRides = async () => {
   const cleanToken = token.replace(/"/g, "");
   console.log("Token:", cleanToken);
 
-  const response = await axios.get("http://localhost:3000/api/route/bookedRides", {
+  const response = await axios.get("https://caber-77w9.onrender.com/api/route/bookedRides", {
     headers: {
       Authorization: `Bearer ${cleanToken}`,
     },

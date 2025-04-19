@@ -15,7 +15,7 @@ export const ForgotPassword = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:3000/api/user/sendOTP",
+      "https://caber-77w9.onrender.com/api/user/sendOTP",
       {
         email,
       }
@@ -32,7 +32,7 @@ export const ForgotPassword = () => {
     // e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/user/verifyOTP",
+        "https://caber-77w9.onrender.com/api/user/verifyOTP",
         {
           email,
           otp,

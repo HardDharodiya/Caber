@@ -17,7 +17,7 @@ const ConfirmRidePopUp = (props) => {
     console.log(email);
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/user/verifyOTP",
+        "https://caber-77w9.onrender.com/api/user/verifyOTP",
         {
           email,
           otp,

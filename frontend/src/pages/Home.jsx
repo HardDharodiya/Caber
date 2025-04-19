@@ -1,14 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import logo from "../assets/20241220_120512.png";
-import map from "../assets/map.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../components/LocationSearchPanel";
-import VehiclePanel from "../components/VehiclePanel";
 import ConfirmRide from "../components/ConfirmRide";
 import LookingForDriver from "../components/LookingForDriver";
-import WaitingForDriver from "../components/WaitingForDriver";
 import { useNavigate } from "react-router-dom";
 import { getbookedRides } from "../utils/getUserData";
 
@@ -16,7 +13,6 @@ const Home = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
-  // const [vehiclePanel, setVehiclePanel] = useState(false);
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingForDriver, setWaitingForDriver] = useState(false);
@@ -25,7 +21,6 @@ const Home = () => {
 
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
-  // const vehiclePanelRef = useRef(null);
   const confirmRidePanelRef = useRef(null);
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
@@ -71,22 +66,6 @@ const Home = () => {
     },
     [panelOpen]
   );
-
-  //vehical panel
-  // useGSAP(
-  //   function () {
-  //     if (vehiclePanel) {
-  //       gsap.to(vehiclePanelRef.current, {
-  //         transform: "translatey(0)",
-  //       });
-  //     } else {
-  //       gsap.to(vehiclePanelRef.current, {
-  //         transform: "translatey(100%)",
-  //       });
-  //     }
-  //   },
-  //   [vehiclePanel]
-  // );
 
   //confirm ride panel
   useGSAP(
@@ -230,22 +209,9 @@ const Home = () => {
             destination={destination}
             setConfirmRidePanel={setConfirmRidePanel}
             setRoute={setRoute}
-            // setVehiclePanel={setVehiclePanel}
           />
         </div>
       </div>
-
-      {/* vehicle panel */}
-      {/* <div
-        ref={vehiclePanelRef}
-        className="fixed z-10 bottom-0 w-full px-3 py-8 translate-y-full bg-gray-900"
-      >
-        <VehiclePanel
-          setVehiclePanel={setVehiclePanel}
-          setConfirmRidePanel={setConfirmRidePanel}
-          setVehicleType={setVehicleType}
-        />
-      </div> */}
 
       {/* confirm ride panel */}
       <div
@@ -269,17 +235,6 @@ const Home = () => {
           setWaitingForDriver={setWaitingForDriver}
         />
       </div>
-
-      {/*Waition for driver*/}
-      {/* <div
-        ref={waitingForDriverRef}
-        className="fixed max-h-[50%] z-10 bottom-0 w-full px-3 py-8  bg-gray-900 overflow-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]"
-      >
-        <WaitingForDriver
-          setWaitingForDriver={setWaitingForDriver}
-          bookedRides={bookedRides}
-        />
-      </div> */}
     </div>
   );
 };

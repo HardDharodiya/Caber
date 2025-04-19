@@ -13,7 +13,7 @@ const UserLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/user/auth/login",
+        "https://caber-77w9.onrender.com/api/user/auth/login",
         {
           email,
           password,
@@ -69,7 +69,7 @@ const UserLogin = () => {
           </Link>
 
           <button
-            type="submit"  // Use the submit type for the button
+            type="submit" // Use the submit type for the button
             className="mt-6 mb-1 flex items-center justify-center w-full bg-[#9A6AFF] text-[#ffffff] py-3 rounded-xl text-xl font-semibold"
           >
             Login

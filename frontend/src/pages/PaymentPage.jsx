@@ -27,7 +27,7 @@ const PaymentForm = () => {
 
     await axios
       .post(
-        "http://localhost:3000/api/user/addMoney",
+        "https://caber-77w9.onrender.com/api/user/addMoney",
         { amount: amount }, // Request body
         {
           headers: {
